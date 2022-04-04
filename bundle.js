@@ -1905,6 +1905,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "notFoundTabTemplate": () => (/* binding */ notFoundTabTemplate),
 /* harmony export */   "navigationTemplate": () => (/* binding */ navigationTemplate)
 /* harmony export */ });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.ts");
+
 var loginLinkButtonTemplate =
 /* html */
 "\n<a class=\"tab-menu-button\" id=\"login-link-button\" href=\"#/login\">\uB85C\uADF8\uC778</a>\n";
@@ -1927,7 +1929,7 @@ var userButtonSelectBoxTemplate =
 "\n  <ul id=\"user-button-select-box\">\n    <li class=\"select-box-item\" >\n      <a href=\"#/user-info\" id=\"user-info-link\">\uC0AC\uC6A9\uC790 \uC815\uBCF4</a>\n    </li>\n    <li class=\"select-box-item\">\n      <button type=\"button\" id=\"logout-button\">\uB85C\uADF8\uC544\uC6C3</button>\n    </li>\n  </ul>\n";
 var notFoundTabTemplate =
 /* html */
-"\n<section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n  <h2>\uD83D\uDEAB <br> \uD398\uC774\uC9C0\uAC00 \uC874\uC7AC\uD558\uC9C0 \uC54A\uAC70\uB098 <br> \uC811\uADFC \uAD8C\uD55C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.</h2>\n  <a href=\"/\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n</section>";
+"\n<section title=\"\uC874\uC7AC\uD558\uC9C0 \uC54A\uB294 \uD398\uC774\uC9C0\" class=\"not-found-section\">\n  <h2>\uD83D\uDEAB <br> \uD398\uC774\uC9C0\uAC00 \uC874\uC7AC\uD558\uC9C0 \uC54A\uAC70\uB098 <br> \uC811\uADFC \uAD8C\uD55C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.</h2>\n  <a href=\"".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DEFAULT_ROUTE.NON_USER, "\" class=\"tab-menu-button\">\uC2DC\uC791 \uD398\uC774\uC9C0\uB85C</a>\n</section>");
 var navigationTemplate =
 /* html */
 "\n  <nav id=\"tab-menu-navigation\">\n    <a id=\"product-tab-menu\" class=\"tab-menu-button\" href=\"#/product\">\uC0C1\uD488 \uAD00\uB9AC</a>\n    <a id=\"charge-tab-menu\" class=\"tab-menu-button\" href=\"#/charge\">\uC794\uB3C8 \uCDA9\uC804</a>\n    <a id=\"purchase-tab-menu\" class=\"tab-menu-button\" href=\"#/purchase\">\n      \uC0C1\uD488 \uAD6C\uB9E4\n    </a>\n  </nav>\n";
