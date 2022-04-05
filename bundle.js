@@ -54,17 +54,19 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 var _vendingMachine = /*#__PURE__*/new WeakMap();
 
-var _authorization = /*#__PURE__*/new WeakMap();
+var _snackBar = /*#__PURE__*/new WeakMap();
 
-var _userButtonContainer = /*#__PURE__*/new WeakMap();
+var _authorization = /*#__PURE__*/new WeakMap();
 
 var _userRenderList = /*#__PURE__*/new WeakMap();
 
 var _nonUserRenderList = /*#__PURE__*/new WeakMap();
 
-var _headerContainer = /*#__PURE__*/new WeakMap();
-
 var _appContainer = /*#__PURE__*/new WeakMap();
+
+var _userButtonContainer = /*#__PURE__*/new WeakMap();
+
+var _headerContainer = /*#__PURE__*/new WeakMap();
 
 var _tabMenuNavigation = /*#__PURE__*/new WeakMap();
 
@@ -80,13 +82,13 @@ var _renderNav = /*#__PURE__*/new WeakSet();
 
 var _renderTab = /*#__PURE__*/new WeakSet();
 
+var _handleTabMenuChange = /*#__PURE__*/new WeakMap();
+
 var _handleUserButtonContainerClick = /*#__PURE__*/new WeakMap();
 
 var _handleSelectBoxToggle = /*#__PURE__*/new WeakMap();
 
 var _handleLogout = /*#__PURE__*/new WeakMap();
-
-var _handleTabMenuChange = /*#__PURE__*/new WeakMap();
 
 var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_0__["default"])(function App() {
   var _this = this;
@@ -108,12 +110,12 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
     value: void 0
   });
 
-  _classPrivateFieldInitSpec(this, _authorization, {
+  _classPrivateFieldInitSpec(this, _snackBar, {
     writable: true,
     value: void 0
   });
 
-  _classPrivateFieldInitSpec(this, _userButtonContainer, {
+  _classPrivateFieldInitSpec(this, _authorization, {
     writable: true,
     value: void 0
   });
@@ -128,12 +130,17 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
     value: void 0
   });
 
-  _classPrivateFieldInitSpec(this, _headerContainer, {
+  _classPrivateFieldInitSpec(this, _appContainer, {
     writable: true,
     value: void 0
   });
 
-  _classPrivateFieldInitSpec(this, _appContainer, {
+  _classPrivateFieldInitSpec(this, _userButtonContainer, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _headerContainer, {
     writable: true,
     value: void 0
   });
@@ -153,6 +160,23 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
       }
 
       _classPrivateMethodGet(_this, _renderNonUser, _renderNonUser2).call(_this);
+    }
+  });
+
+  _classPrivateFieldInitSpec(this, _handleTabMenuChange, {
+    writable: true,
+    value: function value(e) {
+      e.preventDefault();
+      var newHash = e.target.hash;
+      var previousHash = window.location.hash;
+
+      if (!Object.keys((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _userRenderList)).includes(newHash) && !Object.keys((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _nonUserRenderList)).includes(newHash) || newHash === previousHash) {
+        return;
+      }
+
+      window.history.pushState({}, null, newHash);
+
+      (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _render).call(_this);
     }
   });
 
@@ -192,26 +216,9 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
     }
   });
 
-  _classPrivateFieldInitSpec(this, _handleTabMenuChange, {
-    writable: true,
-    value: function value(e) {
-      e.preventDefault();
-      var newHash = e.target.hash;
-      var previousHash = window.location.hash;
-
-      if (!Object.keys((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _userRenderList)).includes(newHash) && !Object.keys((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _nonUserRenderList)).includes(newHash) || newHash === previousHash) {
-        return;
-      }
-
-      window.history.pushState({}, null, newHash);
-
-      (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _render).call(_this);
-    }
-  });
-
-  this.snackBar = new _view_Snackbar__WEBPACK_IMPORTED_MODULE_9__["default"]();
-
   (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _vendingMachine, new _domain_VendingMachine__WEBPACK_IMPORTED_MODULE_4__["default"]());
+
+  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _snackBar, new _view_Snackbar__WEBPACK_IMPORTED_MODULE_9__["default"]());
 
   (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _authorization, new _domain_Authorization__WEBPACK_IMPORTED_MODULE_5__["default"]());
 
@@ -231,16 +238,16 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
 
 function _initRoutes2() {
   (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userRenderList, {
-    '#/user-info': new _view__WEBPACK_IMPORTED_MODULE_6__.UserInfoPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), this.snackBar),
-    '#/product': new _view__WEBPACK_IMPORTED_MODULE_6__.ProductTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), this.snackBar),
-    '#/charge': new _view__WEBPACK_IMPORTED_MODULE_6__.ChargeTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), this.snackBar),
-    '#/purchase': new _view__WEBPACK_IMPORTED_MODULE_6__.PurchaseTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), this.snackBar)
+    '#/user-info': new _view__WEBPACK_IMPORTED_MODULE_6__.UserInfoPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar)),
+    '#/product': new _view__WEBPACK_IMPORTED_MODULE_6__.ProductTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar)),
+    '#/charge': new _view__WEBPACK_IMPORTED_MODULE_6__.ChargeTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar)),
+    '#/purchase': new _view__WEBPACK_IMPORTED_MODULE_6__.PurchaseTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar))
   });
 
   (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _nonUserRenderList, {
-    '#/login': new _view__WEBPACK_IMPORTED_MODULE_6__.LoginPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), this.snackBar),
-    '#/register': new _view__WEBPACK_IMPORTED_MODULE_6__.RegisterPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), this.snackBar),
-    '#/purchase': new _view__WEBPACK_IMPORTED_MODULE_6__.PurchaseTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), this.snackBar)
+    '#/login': new _view__WEBPACK_IMPORTED_MODULE_6__.LoginPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar)),
+    '#/register': new _view__WEBPACK_IMPORTED_MODULE_6__.RegisterPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar)),
+    '#/purchase': new _view__WEBPACK_IMPORTED_MODULE_6__.PurchaseTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _snackBar))
   });
 }
 
@@ -319,7 +326,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "selectDom": () => (/* binding */ selectDom),
 /* harmony export */   "createMainElement": () => (/* binding */ createMainElement),
-/* harmony export */   "getInputValuesFromForm": () => (/* binding */ getInputValuesFromForm)
+/* harmony export */   "getInputValuesFromForm": () => (/* binding */ getInputValuesFromForm),
+/* harmony export */   "emptyFormInputs": () => (/* binding */ emptyFormInputs)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
 
@@ -333,15 +341,30 @@ function createMainElement(template) {
   return mainElement;
 }
 function getInputValuesFromForm(form) {
-  var inputArray = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(document.querySelectorAll('input', form));
+  var inputArray = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(form.querySelectorAll('input'));
 
   var inputData = inputArray.reduce(function (dataObject, _ref) {
     var name = _ref.name,
-        value = _ref.value;
+        value = _ref.value,
+        type = _ref.type;
+
+    if (type === 'number') {
+      dataObject[name] = Number(value);
+      return dataObject;
+    }
+
     dataObject[name] = value;
     return dataObject;
   }, {});
   return inputData;
+}
+function emptyFormInputs(form) {
+  var inputArray = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(document.querySelectorAll('input', form));
+
+  inputArray.forEach(function (input) {
+    input.value = '';
+  });
+  inputArray[0].focus();
 }
 
 /***/ }),
@@ -415,6 +438,8 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 
 
+var _snackbar = /*#__PURE__*/new WeakMap();
+
 var _vendingMachine = /*#__PURE__*/new WeakMap();
 
 var _ChargeTabContainer = /*#__PURE__*/new WeakMap();
@@ -431,17 +456,18 @@ var _handleAddChange = /*#__PURE__*/new WeakMap();
 
 var _renderCoinStatus = /*#__PURE__*/new WeakSet();
 
-var _resetInput = /*#__PURE__*/new WeakSet();
-
 var ChargeTab = /*#__PURE__*/function () {
   function ChargeTab(machine, snackbar) {
     var _this = this;
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ChargeTab);
 
-    _classPrivateMethodInitSpec(this, _resetInput);
-
     _classPrivateMethodInitSpec(this, _renderCoinStatus);
+
+    _classPrivateFieldInitSpec(this, _snackbar, {
+      writable: true,
+      value: void 0
+    });
 
     _classPrivateFieldInitSpec(this, _vendingMachine, {
       writable: true,
@@ -485,16 +511,16 @@ var ChargeTab = /*#__PURE__*/function () {
 
           _classPrivateMethodGet(_this, _renderCoinStatus, _renderCoinStatus2).call(_this);
 
-          _classPrivateMethodGet(_this, _resetInput, _resetInput2).call(_this);
+          (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _moneyInput).value = '';
         } catch (_ref) {
           var message = _ref.message;
 
-          _this.snackbar.addToMessageList(message);
+          (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _snackbar).addToMessageList(message);
         }
       }
     });
 
-    this.snackbar = snackbar;
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _snackbar, snackbar);
 
     (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _vendingMachine, machine);
 
@@ -536,10 +562,6 @@ function _renderCoinStatus2() {
     coinTableData.textContent = "".concat(count, "\uAC1C");
   });
   (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _totalChange).textContent = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine).totalChange;
-}
-
-function _resetInput2() {
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _moneyInput).value = '';
 }
 
 
@@ -760,23 +782,17 @@ function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(
 
 var _vendingMachine = /*#__PURE__*/new WeakMap();
 
+var _snackbar = /*#__PURE__*/new WeakMap();
+
 var _productContainer = /*#__PURE__*/new WeakMap();
 
 var _addProductForm = /*#__PURE__*/new WeakMap();
-
-var _addProductNameInput = /*#__PURE__*/new WeakMap();
-
-var _addProductPriceInput = /*#__PURE__*/new WeakMap();
-
-var _addProductStockInput = /*#__PURE__*/new WeakMap();
 
 var _productStatusTable = /*#__PURE__*/new WeakMap();
 
 var _renderInitialProducts = /*#__PURE__*/new WeakSet();
 
 var _handleAddProductForm = /*#__PURE__*/new WeakMap();
-
-var _resetInput = /*#__PURE__*/new WeakSet();
 
 var _handleProductStatus = /*#__PURE__*/new WeakMap();
 
@@ -794,11 +810,14 @@ var ProductTab = /*#__PURE__*/function () {
 
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, ProductTab);
 
-    _classPrivateMethodInitSpec(this, _resetInput);
-
     _classPrivateMethodInitSpec(this, _renderInitialProducts);
 
     _classPrivateFieldInitSpec(this, _vendingMachine, {
+      writable: true,
+      value: void 0
+    });
+
+    _classPrivateFieldInitSpec(this, _snackbar, {
       writable: true,
       value: void 0
     });
@@ -813,21 +832,6 @@ var ProductTab = /*#__PURE__*/function () {
       value: void 0
     });
 
-    _classPrivateFieldInitSpec(this, _addProductNameInput, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _addProductPriceInput, {
-      writable: true,
-      value: void 0
-    });
-
-    _classPrivateFieldInitSpec(this, _addProductStockInput, {
-      writable: true,
-      value: void 0
-    });
-
     _classPrivateFieldInitSpec(this, _productStatusTable, {
       writable: true,
       value: void 0
@@ -837,12 +841,10 @@ var ProductTab = /*#__PURE__*/function () {
       writable: true,
       value: function value(e) {
         e.preventDefault();
-
-        var name = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _addProductNameInput).value;
-
-        var price = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _addProductPriceInput).valueAsNumber;
-
-        var stock = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _addProductStockInput).valueAsNumber;
+        var inputData = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.getInputValuesFromForm)(e.target);
+        var name = inputData.name,
+            price = inputData.price,
+            stock = inputData.stock;
 
         try {
           var id = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _vendingMachine).addProduct({
@@ -858,11 +860,11 @@ var ProductTab = /*#__PURE__*/function () {
             id: id
           }));
 
-          _classPrivateMethodGet(_this, _resetInput, _resetInput2).call(_this);
+          (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.emptyFormInputs)(e.target);
         } catch (_ref) {
           var message = _ref.message;
 
-          _this.snackbar.addToMessageList(message);
+          (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _snackbar).addToMessageList(message);
         }
       }
     });
@@ -935,7 +937,7 @@ var ProductTab = /*#__PURE__*/function () {
         } catch (_ref3) {
           var message = _ref3.message;
 
-          _this.snackbar.addToMessageList(message);
+          (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _snackbar).addToMessageList(message);
         }
       }
     });
@@ -962,7 +964,7 @@ var ProductTab = /*#__PURE__*/function () {
         } catch (_ref4) {
           var message = _ref4.message;
 
-          _this.snackbar.addToMessageList(message);
+          (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _snackbar).addToMessageList(message);
         }
       }
     });
@@ -984,7 +986,7 @@ var ProductTab = /*#__PURE__*/function () {
           } catch (_ref5) {
             var message = _ref5.message;
 
-            _this.snackbar.addToMessageList(message);
+            (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _snackbar).addToMessageList(message);
           }
         }
       }
@@ -992,17 +994,11 @@ var ProductTab = /*#__PURE__*/function () {
 
     (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _vendingMachine, machine);
 
-    this.snackbar = snackbar;
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _snackbar, snackbar);
 
     (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _productContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.createMainElement)(_ProductTabTemplate__WEBPACK_IMPORTED_MODULE_8__.productTabTemplate));
 
     (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _addProductForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#add-product-form', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _productContainer)));
-
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _addProductNameInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#add-product-name-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _productContainer)));
-
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _addProductPriceInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#add-product-price-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _productContainer)));
-
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _addProductStockInput, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#add-product-stock-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _productContainer)));
 
     (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _productStatusTable, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('.product-status-table', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _productContainer)));
 
@@ -1050,14 +1046,6 @@ function _renderInitialProducts2() {
   (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _productStatusTable).insertAdjacentHTML('beforeend', productTableRows);
 }
 
-function _resetInput2() {
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _addProductNameInput).value = '';
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _addProductPriceInput).value = '';
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _addProductStockInput).value = '';
-
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _addProductNameInput).focus();
-}
-
 
 
 /***/ }),
@@ -1077,7 +1065,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var productTabTemplate =
 /* html */
-"\n<section class=\"form-section\" aria-labelledby=\"product-tab-title\">\n  <h2 class=\"tab-title\" id=\"product-tab-title\">\uC0C1\uD488 \uCD94\uAC00\uD558\uAE30</h2>\n  <form id=\"add-product-form\">\n    <div class=\"instructions\">\n      <h3>\uD83D\uDED2\uC0C1\uD488 \uCD94\uAC00 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n      <ul class=\"instructions-list\">\n        <li>\uC0C1\uD488\uBA85: 1\uC790 \uC774\uC0C1 10\uC790 \uC774\uD558</li>\n        <li>\uAC00\uACA9: 100\uC6D0 \uC774\uC0C1 10000\uC6D0 \uC774\uD558, 10\uC6D0 \uB2E8\uC704</li>\n        <li>\uC218\uB7C9: 1\uAC1C \uC774\uC0C1 20\uAC1C \uC774\uD558</li>\n      </ul>\n    </div>\n    <fieldset>\n      <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n      <div class=\"input-wrapper\">\n        <label for=\"add-product-name\">\uC0C1\uD488\uBA85\n        <input type=\"text\" name=\"add-product-name\" id=\"add-product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n        </label>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"add-product-price\">\uC0C1\uD488 \uAC00\uACA9</label>\n        <input type=\"number\" name=\"add-product-price\" id=\"add-product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"add-product-stock\">\uC0C1\uD488 \uC218\uB7C9</label>\n        <input type=\"number\" name=\"add-product-stock\" id=\"add-product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n      </div>\n      <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n    </fieldset>\n  </form>\n</section>\n<table class=\"product-status-table\">\n  <caption>\n    \uC0C1\uD488 \uD604\uD669\n  </caption>\n  <tr>\n    <th>\uC0C1\uD488\uBA85</th>\n    <th>\uAC00\uACA9</th>\n    <th>\uC218\uB7C9</th>\n    <th>\uAD00\uB9AC</th>\n  </tr>\n</table>\n";
+"\n<section class=\"form-section\" aria-labelledby=\"product-tab-title\">\n  <h2 class=\"tab-title\" id=\"product-tab-title\">\uC0C1\uD488 \uCD94\uAC00\uD558\uAE30</h2>\n  <form id=\"add-product-form\">\n    <div class=\"instructions\">\n      <h3>\uD83D\uDED2\uC0C1\uD488 \uCD94\uAC00 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n      <ul class=\"instructions-list\">\n        <li>\uC0C1\uD488\uBA85: 1\uC790 \uC774\uC0C1 10\uC790 \uC774\uD558</li>\n        <li>\uAC00\uACA9: 100\uC6D0 \uC774\uC0C1 10000\uC6D0 \uC774\uD558, 10\uC6D0 \uB2E8\uC704</li>\n        <li>\uC218\uB7C9: 1\uAC1C \uC774\uC0C1 20\uAC1C \uC774\uD558</li>\n      </ul>\n    </div>\n    <fieldset>\n      <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n      <div class=\"input-wrapper\">\n        <label for=\"name\">\uC0C1\uD488\uBA85\n        <input type=\"text\" name=\"name\" id=\"product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n        </label>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"price\">\uC0C1\uD488 \uAC00\uACA9</label>\n        <input type=\"number\" name=\"price\" id=\"product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"stock\">\uC0C1\uD488 \uC218\uB7C9</label>\n        <input type=\"number\" name=\"stock\" id=\"product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n      </div>\n      <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n    </fieldset>\n  </form>\n</section>\n<table class=\"product-status-table\">\n  <caption>\n    \uC0C1\uD488 \uD604\uD669\n  </caption>\n  <tr>\n    <th>\uC0C1\uD488\uBA85</th>\n    <th>\uAC00\uACA9</th>\n    <th>\uC218\uB7C9</th>\n    <th>\uAD00\uB9AC</th>\n  </tr>\n</table>\n";
 var productTableRowTemplate = function productTableRowTemplate(_ref) {
   var name = _ref.name,
       price = _ref.price,
@@ -1095,7 +1083,7 @@ var productUpdateTableRowTemplate = function productUpdateTableRowTemplate(_ref2
       id = _ref2.id;
   return (
     /* html */
-    "\n<tr>\n  <td><input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" /></td>\n  <td><input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" /></td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n      \uD655\uC778\n      </button>\n      <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n      \uCDE8\uC18C\n      </button>\n    </div>\n  </td>\n</tr>\n")
+    "\n<tr>\n  <td>\n    <input type=\"text\" class=\"update-product-name-input\" value=\"".concat(name, "\" />\n  </td>\n  <td>\n    <input type=\"number\" class=\"update-product-price-input\" value=\"").concat(price, "\" />\n  </td>\n  <td>\n    <input type=\"number\" class=\"update-product-stock-input\" value=\"").concat(stock, "\" />\n  </td>\n  <td>\n    <div class=\"table-button-wrapper\">\n      <button type=\"button\" class=\"confirm-update-button\" data-product-id=").concat(id, ">\n      \uD655\uC778\n      </button>\n      <button type=\"button\" class=\"cancel-update-button\" data-product-id=").concat(id, ">\n      \uCDE8\uC18C\n      </button>\n    </div>\n  </td>\n</tr>\n")
   );
 };
 
@@ -1889,7 +1877,7 @@ var userInfoPageTemplate = function userInfoPageTemplate(_ref) {
       name = _ref.name;
   return (
     /* html */
-    "\n  <h2>\uD68C\uC6D0 \uC815\uBCF4 \uC218\uC815</h2>\n  <form class=\"auth-form\">\n    <label for=\"email\">\uC774\uBA54\uC77C</label>\n    <input\n      type=\"email\"\n      name=\"email\"\n      id=\"email-input\"\n      value=\"".concat(email, "\"\n      disabled\n    />\n    <label for=\"name\">\uC774\uB984</label>\n    <input\n      type=\"text\"\n      name=\"name\"\n      id=\"name-input\"\n      value=\"").concat(name, "\"\n    />\n    <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n    <input\n      type=\"password\"\n      name=\"password\"\n      id=\"password-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n    <input\n      type=\"password\"\n      name=\"password-confirm\"\n      id=\"password-confirm-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uB2E4\uC2DC \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <button type=\"submit\" class=\"submit-button\">\uC218\uC815\uD558\uAE30</button>\n  </form>\n")
+    "\n  <h2>\uD68C\uC6D0 \uC815\uBCF4 \uC218\uC815</h2>\n  <div class=\"instructions\">\n    <h3>\uD83D\uDC68\u200D\uD83C\uDFEB \uD68C\uC6D0\uC815\uBCF4 \uC218\uC815 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n    <ul class=\"instructions-list\">\n      <li>\uC774\uBA54\uC77C\uC740 \uC218\uC815\uC774 \uBD88\uAC00\uB2A5\uD569\uB2C8\uB2E4.</li>\n      <li>\uC815\uBCF4\uC758 \uC77C\uBD80\uB97C \uBCC0\uACBD\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n      <li>\uBE44\uBC00\uBC88\uD638\uB97C \uC218\uC815\uD558\uACE0\uC790 \uD558\uC9C0 \uC54A\uB294\uB2E4\uBA74 \uBE44\uBC00\uBC88\uD638 \uC785\uB825\uB780\uACFC \uD655\uC778\uB780\uC744 \uC785\uB825\uD558\uC9C0 \uB9C8\uC138\uC694.</li>\n      <li>\uC774\uB984\uC740 2\uC790-6\uC790 \uAE38\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.</li>\n      <li>\uBE44\uBC00\uBC88\uD638\uB294 8\uC790 \uC774\uC0C1 20\uC790 \uC774\uD558\uC758 \uAE38\uC774\uB85C \uC601\uC18C\uBB38\uC790, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790\uB97C \uD3EC\uD568\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n    </ul>\n  </div>\n  <form class=\"auth-form\">\n    <label for=\"email\">\uC774\uBA54\uC77C</label>\n    <input\n      type=\"email\"\n      name=\"email\"\n      id=\"email-input\"\n      value=\"".concat(email, "\"\n      disabled\n    />\n    <label for=\"name\">\uC774\uB984</label>\n    <input\n      type=\"text\"\n      name=\"name\"\n      id=\"name-input\"\n      value=\"").concat(name, "\"\n    />\n    <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n    <input\n      type=\"password\"\n      name=\"password\"\n      id=\"password-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uBCC0\uACBD\uD558\uB824\uBA74 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n    <input\n      type=\"password\"\n      name=\"password-confirm\"\n      id=\"password-confirm-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uBCC0\uACBD\uD558\uB824\uBA74 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <button type=\"submit\" class=\"submit-button\">\uC218\uC815\uD558\uAE30</button>\n  </form>\n")
   );
 };
 
@@ -1974,6 +1962,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/css/app.css":
+/*!***************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/css/app.css ***!
+  \***************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.user-button-container {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button {\r\n  display: block;\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: '';\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position: absolute;\r\n\r\n  width: 100px;\r\n  top: 64px;\r\n  right: -15px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: var(--button-bg-color);\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: var(--button-text-default-color);\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: var(--button-text-default-color);\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/css/app.css"],"names":[],"mappings":"AAAA;EACE,YAAY;EACZ,iBAAiB;EACjB,gBAAgB;EAChB,yBAAyB;EACzB,4BAA4B;EAC5B,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,kBAAkB;EAClB,SAAS;EACT,kBAAkB;AACpB;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,6BAA6B;EAC7B,UAAU;AACZ;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,MAAM;EACN,OAAO;EACP,WAAW;EACX,YAAY;EACZ,UAAU;AACZ;;AAEA;EACE,kBAAkB;;EAElB,YAAY;EACZ,SAAS;EACT,YAAY;EACZ,qBAAqB;EACrB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,4BAA4B;EAC5B,wCAAwC;EACxC,kBAAkB;AACpB;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,qBAAqB;EACrB,uCAAuC;AACzC;;AAEA;EACE,uCAAuC;AACzC;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,6BAA6B;AAC/B","sourcesContent":["#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.user-button-container {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button {\r\n  display: block;\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: '';\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position: absolute;\r\n\r\n  width: 100px;\r\n  top: 64px;\r\n  right: -15px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: var(--button-bg-color);\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: var(--button-text-default-color);\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: var(--button-text-default-color);\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}\r\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/css/base.css":
 /*!****************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/css/base.css ***!
@@ -1995,7 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.user-button-container {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button {\r\n  display: block\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position:absolute;\r\n  \r\n  width: 100px;\r\n  top: 64px;\r\n  right: -15px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: #f3f3f3;\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: #000000;\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: #000000;\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}", "",{"version":3,"sources":["webpack://./src/css/base.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;EACtB,oBAAoB;EACpB,gBAAgB;EAChB,0BAA0B;EAC1B;;wEAEsE;AACxE;;AAEA;EACE,0BAA0B;EAC1B,sCAAsC;EACtC,oCAAoC;EACpC,8CAA8C;AAChD;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,iBAAiB;EACjB,gBAAgB;EAChB,yBAAyB;EACzB,4BAA4B;EAC5B,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,kBAAkB;EAClB,SAAS;EACT,kBAAkB;AACpB;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,wCAAwC;AAC1C;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,aAAa;AACf;;AAEA,kBAAkB;AAClB,gCAAgC;AAChC;;EAEE,wBAAwB;EACxB,SAAS;AACX;;AAEA,YAAY;AACZ;EACE,0BAA0B;AAC5B;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE;AACF;;AAEA;EACE,6BAA6B;EAC7B,UAAU;AACZ;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,MAAM;EACN,OAAO;EACP,WAAW;EACX,YAAY;EACZ,UAAU;AACZ;;AAEA;EACE,iBAAiB;;EAEjB,YAAY;EACZ,SAAS;EACT,YAAY;EACZ,qBAAqB;EACrB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,4BAA4B;EAC5B,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,qBAAqB;EACrB,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,6BAA6B;AAC/B","sourcesContent":["@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');\r\n\r\n* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.user-button-container {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button {\r\n  display: block\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position:absolute;\r\n  \r\n  width: 100px;\r\n  top: 64px;\r\n  right: -15px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: #f3f3f3;\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: #000000;\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: #000000;\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\ninput:disabled {\r\n  background-color: #d4d4d4;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/css/base.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;EACtB,oBAAoB;EACpB,gBAAgB;EAChB,0BAA0B;EAC1B;;wEAEsE;AACxE;;AAEA;EACE,0BAA0B;EAC1B,sCAAsC;EACtC,oCAAoC;EACpC,8CAA8C;AAChD;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,wCAAwC;AAC1C;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,yBAAyB;AAC3B;;AAEA,kBAAkB;AAClB,gCAAgC;AAChC;;EAEE,wBAAwB;EACxB,SAAS;AACX;;AAEA,YAAY;AACZ;EACE,0BAA0B;AAC5B","sourcesContent":["@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');\r\n\r\n* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\ninput:disabled {\r\n  background-color: #d4d4d4;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2045,12 +2060,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_base_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./base.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/base.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./nav.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/nav.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./form.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/form.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_login_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./login.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/login.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./table.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/table.css");
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_snackbar_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./snackbar.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/snackbar.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_app_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./app.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/app.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./nav.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/nav.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./form.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/form.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_login_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./login.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/login.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./table.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/table.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_snackbar_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! -!../../node_modules/css-loader/dist/cjs.js!./snackbar.css */ "./node_modules/css-loader/dist/cjs.js!./src/css/snackbar.css");
 // Imports
+
 
 
 
@@ -2061,11 +2078,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_base_css__WEBPACK_IMPORTED_MODULE_2__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_login_css__WEBPACK_IMPORTED_MODULE_5__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_6__["default"]);
-___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_snackbar_css__WEBPACK_IMPORTED_MODULE_7__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_app_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_nav_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_form_css__WEBPACK_IMPORTED_MODULE_5__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_login_css__WEBPACK_IMPORTED_MODULE_6__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_table_css__WEBPACK_IMPORTED_MODULE_7__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_snackbar_css__WEBPACK_IMPORTED_MODULE_8__["default"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\r\n", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
 // Exports
@@ -3469,15 +3487,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "PRODUCT_RULES": () => (/* binding */ PRODUCT_RULES),
 /* harmony export */   "VENDING_MACHINE_RULES": () => (/* binding */ VENDING_MACHINE_RULES),
 /* harmony export */   "USER_REGISTER_RULES": () => (/* binding */ USER_REGISTER_RULES),
-/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
-/* harmony export */   "USER_DATA_CHANGED_MESSAGE": () => (/* binding */ USER_DATA_CHANGED_MESSAGE),
-/* harmony export */   "NOT_ENOUGH_CHANGE_MESSAGE": () => (/* binding */ NOT_ENOUGH_CHANGE_MESSAGE),
-/* harmony export */   "CONFIRM_DELETE_MESSAGE": () => (/* binding */ CONFIRM_DELETE_MESSAGE),
 /* harmony export */   "MONEY_NAME_STRING": () => (/* binding */ MONEY_NAME_STRING),
 /* harmony export */   "AUTH_URL_BASE": () => (/* binding */ AUTH_URL_BASE),
 /* harmony export */   "POST_REQUEST_OPTIONS": () => (/* binding */ POST_REQUEST_OPTIONS),
 /* harmony export */   "DEFAULT_ROUTE": () => (/* binding */ DEFAULT_ROUTE),
-/* harmony export */   "ACCESS_TOKEN": () => (/* binding */ ACCESS_TOKEN)
+/* harmony export */   "ACCESS_TOKEN_KEY_STRING": () => (/* binding */ ACCESS_TOKEN_KEY_STRING),
+/* harmony export */   "USER_DATA_CHANGED_MESSAGE": () => (/* binding */ USER_DATA_CHANGED_MESSAGE),
+/* harmony export */   "NOT_ENOUGH_CHANGE_MESSAGE": () => (/* binding */ NOT_ENOUGH_CHANGE_MESSAGE),
+/* harmony export */   "CONFIRM_DELETE_MESSAGE": () => (/* binding */ CONFIRM_DELETE_MESSAGE),
+/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE)
 /* harmony export */ });
 const PRODUCT_RULES = {
     MAX_NAME_LENGTH: 10,
@@ -3498,6 +3516,25 @@ const USER_REGISTER_RULES = {
     NAME_MAX_LENGTH: 6,
     PASSWORD_REGEX: /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()[\]{}\-:;',?/~^+=<>]).{8,20}$/,
 };
+const MONEY_NAME_STRING = {
+    COIN_500_WON: 'FIVE_HUNDRED_WON',
+    COIN_100_WON: 'ONE_HUNDRED_WON',
+    COIN_50_WON: 'FIFTY_WON',
+    COIN_10_WON: 'TEN_WON',
+};
+const AUTH_URL_BASE = 'https://vendingmachine-auth-server.herokuapp.com';
+const POST_REQUEST_OPTIONS = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+};
+const DEFAULT_ROUTE = {
+    USER: '#/product',
+    NON_USER: '#/purchase',
+};
+const ACCESS_TOKEN_KEY_STRING = 'accessToken';
+const USER_DATA_CHANGED_MESSAGE = '개인 정보 수정이 완료되었습니다.';
+const NOT_ENOUGH_CHANGE_MESSAGE = '자판기가 보유한 잔돈이 부족합니다. 관리자에게 문의해주세요.';
+const CONFIRM_DELETE_MESSAGE = '해당 상품을 정말 삭제하시겠습니까?';
 const ERROR_MESSAGE = {
     CONTAIN_EMPTY_FIELD_IN_FORM: '상품명, 가격, 수량을 모두 입력해주세요.',
     PRODUCT_NAME: {
@@ -3539,25 +3576,6 @@ const ERROR_MESSAGE = {
         SERVER_FAILURE: '서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
     },
 };
-const USER_DATA_CHANGED_MESSAGE = '개인 정보 수정이 완료되었습니다.';
-const NOT_ENOUGH_CHANGE_MESSAGE = '자판기가 보유한 잔돈이 부족합니다. 관리자에게 문의해주세요.';
-const CONFIRM_DELETE_MESSAGE = '해당 상품을 정말 삭제하시겠습니까?';
-const MONEY_NAME_STRING = {
-    COIN_500_WON: 'FIVE_HUNDRED_WON',
-    COIN_100_WON: 'ONE_HUNDRED_WON',
-    COIN_50_WON: 'FIFTY_WON',
-    COIN_10_WON: 'TEN_WON',
-};
-const AUTH_URL_BASE = 'https://vendingmachine-auth-server.herokuapp.com';
-const POST_REQUEST_OPTIONS = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-};
-const DEFAULT_ROUTE = {
-    USER: '#/product',
-    NON_USER: '#/purchase',
-};
-const ACCESS_TOKEN = 'accessToken';
 
 
 /***/ }),
@@ -3609,8 +3627,8 @@ class Authorization {
         __classPrivateFieldSet(this, _Authorization_userId, null, "f");
         __classPrivateFieldSet(this, _Authorization_name, null, "f");
         __classPrivateFieldSet(this, _Authorization_email, null, "f");
-        __classPrivateFieldSet(this, _Authorization_accessToken, __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getAccessToken).call(this), "f");
         __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getUserData).call(this);
+        __classPrivateFieldSet(this, _Authorization_accessToken, __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getAccessToken).call(this), "f");
         __classPrivateFieldSet(this, _Authorization_isLoggedIn, !!__classPrivateFieldGet(this, _Authorization_userId, "f") && !!__classPrivateFieldGet(this, _Authorization_accessToken, "f"), "f");
     }
     get isLoggedIn() {
@@ -3666,7 +3684,7 @@ class Authorization {
     }
     logout() {
         window.sessionStorage.removeItem('userData');
-        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN_KEY_STRING}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         __classPrivateFieldSet(this, _Authorization_userId, null, "f");
         __classPrivateFieldSet(this, _Authorization_name, null, "f");
         __classPrivateFieldSet(this, _Authorization_email, null, "f");
@@ -3695,7 +3713,7 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
 }, _Authorization_saveUserData = function _Authorization_saveUserData({ accessToken, userId, name, email }) {
     window.sessionStorage.setItem('userData', JSON.stringify({ userId, name, email }));
     if (accessToken) {
-        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN}=${accessToken}; path=/;`;
+        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN_KEY_STRING}=${accessToken}; path=/;`;
         __classPrivateFieldSet(this, _Authorization_accessToken, accessToken, "f");
     }
     __classPrivateFieldSet(this, _Authorization_userId, userId, "f");
@@ -3705,7 +3723,7 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
     var _a;
     const accessToken = (_a = document.cookie
         .split('; ')
-        .find((row) => row.startsWith(_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
+        .find((row) => row.startsWith(_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN_KEY_STRING))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
     return accessToken;
 }, _Authorization_validateRegisterData = function _Authorization_validateRegisterData(registerData) {
     const registerDataValidator = [
@@ -3923,11 +3941,6 @@ class VendingMachine {
     get userMoney() {
         return __classPrivateFieldGet(this, _VendingMachine_userMoney, "f");
     }
-    addChange(money) {
-        __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateChange).call(this, money);
-        __classPrivateFieldGet(this, _VendingMachine_moneyBox, "f").addChange(money);
-        return __classPrivateFieldGet(this, _VendingMachine_moneyBox, "f").coinStatusList;
-    }
     addProduct(data) {
         __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateUniqueProductName).call(this, data.name);
         const newId = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.generateUniqueId)(Object.keys(__classPrivateFieldGet(this, _VendingMachine_productList, "f")));
@@ -3944,6 +3957,11 @@ class VendingMachine {
     removeProduct(productId) {
         __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateProductIdInList).call(this, productId);
         delete __classPrivateFieldGet(this, _VendingMachine_productList, "f")[productId];
+    }
+    addChange(money) {
+        __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateChange).call(this, money);
+        __classPrivateFieldGet(this, _VendingMachine_moneyBox, "f").addChange(money);
+        return __classPrivateFieldGet(this, _VendingMachine_moneyBox, "f").coinStatusList;
     }
     addUserMoney(money) {
         __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateUserMoney).call(this, money);
