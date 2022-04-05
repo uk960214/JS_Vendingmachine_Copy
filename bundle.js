@@ -188,6 +188,7 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
 
       (_selectDom = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box')) === null || _selectDom === void 0 ? void 0 : _selectDom.remove();
       window.location.href = _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER;
+      window.location.reload();
     }
   });
 
@@ -3594,7 +3595,7 @@ var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || 
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _Authorization_instances, _Authorization_isLoggedIn, _Authorization_userId, _Authorization_name, _Authorization_email, _Authorization_handleServerError, _Authorization_getUserData, _Authorization_saveUserData, _Authorization_validateRegisterData, _Authorization_validateUpdateData;
+var _Authorization_instances, _Authorization_isLoggedIn, _Authorization_userId, _Authorization_name, _Authorization_email, _Authorization_accessToken, _Authorization_handleServerError, _Authorization_getUserData, _Authorization_saveUserData, _Authorization_getAccessToken, _Authorization_validateRegisterData, _Authorization_validateUpdateData;
 
 
 class Authorization {
@@ -3604,11 +3605,13 @@ class Authorization {
         _Authorization_userId.set(this, void 0);
         _Authorization_name.set(this, void 0);
         _Authorization_email.set(this, void 0);
+        _Authorization_accessToken.set(this, void 0);
         __classPrivateFieldSet(this, _Authorization_userId, null, "f");
         __classPrivateFieldSet(this, _Authorization_name, null, "f");
         __classPrivateFieldSet(this, _Authorization_email, null, "f");
+        __classPrivateFieldSet(this, _Authorization_accessToken, __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getAccessToken).call(this), "f");
         __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getUserData).call(this);
-        __classPrivateFieldSet(this, _Authorization_isLoggedIn, !!__classPrivateFieldGet(this, _Authorization_userId, "f"), "f");
+        __classPrivateFieldSet(this, _Authorization_isLoggedIn, !!__classPrivateFieldGet(this, _Authorization_accessToken, "f"), "f");
     }
     get isLoggedIn() {
         return __classPrivateFieldGet(this, _Authorization_isLoggedIn, "f");
@@ -3627,18 +3630,23 @@ class Authorization {
             const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users`, Object.assign(Object.assign({}, _constants__WEBPACK_IMPORTED_MODULE_0__.POST_REQUEST_OPTIONS), { body: JSON.stringify(registerData) }));
             if (!response.ok)
                 yield __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_handleServerError).call(this, response);
-            const { user: { id: userId, name, email }, } = yield response.json();
-            __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_saveUserData).call(this, { userId, name, email });
+            const { accessToken, user: { id: userId, name, email }, } = yield response.json();
+            __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_saveUserData).call(this, { accessToken, userId, name, email });
             __classPrivateFieldSet(this, _Authorization_isLoggedIn, true, "f");
         });
     }
     update(userInputData) {
         return __awaiter(this, void 0, void 0, function* () {
             __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_validateUpdateData).call(this, userInputData);
+            const updateData = userInputData;
+            delete updateData.passwordConfirm;
             const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users/${__classPrivateFieldGet(this, _Authorization_userId, "f")}`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userInputData),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${__classPrivateFieldGet(this, _Authorization_accessToken, "f")}`,
+                },
+                body: JSON.stringify(updateData),
             });
             if (!response.ok)
                 yield __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_handleServerError).call(this, response);
@@ -3651,18 +3659,21 @@ class Authorization {
             const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/login`, Object.assign(Object.assign({}, _constants__WEBPACK_IMPORTED_MODULE_0__.POST_REQUEST_OPTIONS), { body: JSON.stringify(userInputData) }));
             if (!response.ok)
                 yield __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_handleServerError).call(this, response);
-            const { user: { id: userId, name, email }, } = yield response.json();
-            __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_saveUserData).call(this, { userId, name, email });
+            const { accessToken, user: { id: userId, name, email }, } = yield response.json();
+            __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_saveUserData).call(this, { accessToken, userId, name, email });
             __classPrivateFieldSet(this, _Authorization_isLoggedIn, true, "f");
         });
     }
     logout() {
         window.sessionStorage.removeItem('userData');
+        document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         __classPrivateFieldSet(this, _Authorization_userId, null, "f");
+        __classPrivateFieldSet(this, _Authorization_name, null, "f");
+        __classPrivateFieldSet(this, _Authorization_email, null, "f");
         __classPrivateFieldSet(this, _Authorization_isLoggedIn, false, "f");
     }
 }
-_Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap(), _Authorization_name = new WeakMap(), _Authorization_email = new WeakMap(), _Authorization_instances = new WeakSet(), _Authorization_handleServerError = function _Authorization_handleServerError(response) {
+_Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap(), _Authorization_name = new WeakMap(), _Authorization_email = new WeakMap(), _Authorization_accessToken = new WeakMap(), _Authorization_instances = new WeakSet(), _Authorization_handleServerError = function _Authorization_handleServerError(response) {
     return __awaiter(this, void 0, void 0, function* () {
         const rejectMessage = yield response.json();
         if (rejectMessage === 'Email already exists') {
@@ -3678,14 +3689,20 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
     if (!savedUserData)
         return;
     const { userId, name, email } = savedUserData;
-    __classPrivateFieldSet(this, _Authorization_userId, userId, "f");
-    __classPrivateFieldSet(this, _Authorization_name, name, "f");
-    __classPrivateFieldSet(this, _Authorization_email, email, "f");
-}, _Authorization_saveUserData = function _Authorization_saveUserData({ userId, name, email }) {
+    __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_saveUserData).call(this, { userId, name, email });
+}, _Authorization_saveUserData = function _Authorization_saveUserData({ accessToken, userId, name, email }) {
     window.sessionStorage.setItem('userData', JSON.stringify({ userId, name, email }));
+    if (accessToken)
+        document.cookie = `accessToken=${accessToken}`;
     __classPrivateFieldSet(this, _Authorization_userId, userId, "f");
     __classPrivateFieldSet(this, _Authorization_name, name, "f");
     __classPrivateFieldSet(this, _Authorization_email, email, "f");
+}, _Authorization_getAccessToken = function _Authorization_getAccessToken() {
+    var _a;
+    const accessToken = (_a = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('accessToken'))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
+    return accessToken;
 }, _Authorization_validateRegisterData = function _Authorization_validateRegisterData(registerData) {
     const registerDataValidator = [
         {
