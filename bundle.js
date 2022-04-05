@@ -3477,7 +3477,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MONEY_NAME_STRING": () => (/* binding */ MONEY_NAME_STRING),
 /* harmony export */   "AUTH_URL_BASE": () => (/* binding */ AUTH_URL_BASE),
 /* harmony export */   "POST_REQUEST_OPTIONS": () => (/* binding */ POST_REQUEST_OPTIONS),
-/* harmony export */   "DEFAULT_ROUTE": () => (/* binding */ DEFAULT_ROUTE)
+/* harmony export */   "DEFAULT_ROUTE": () => (/* binding */ DEFAULT_ROUTE),
+/* harmony export */   "ACCESS_TOKEN": () => (/* binding */ ACCESS_TOKEN)
 /* harmony export */ });
 const PRODUCT_RULES = {
     MAX_NAME_LENGTH: 10,
@@ -3557,6 +3558,7 @@ const DEFAULT_ROUTE = {
     USER: '#/product',
     NON_USER: '#/purchase',
 };
+const ACCESS_TOKEN = 'accessToken';
 
 
 /***/ }),
@@ -3610,7 +3612,7 @@ class Authorization {
         __classPrivateFieldSet(this, _Authorization_email, null, "f");
         __classPrivateFieldSet(this, _Authorization_accessToken, __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getAccessToken).call(this), "f");
         __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_getUserData).call(this);
-        __classPrivateFieldSet(this, _Authorization_isLoggedIn, !!__classPrivateFieldGet(this, _Authorization_accessToken, "f"), "f");
+        __classPrivateFieldSet(this, _Authorization_isLoggedIn, !!__classPrivateFieldGet(this, _Authorization_userId, "f") && !!__classPrivateFieldGet(this, _Authorization_accessToken, "f"), "f");
     }
     get isLoggedIn() {
         return __classPrivateFieldGet(this, _Authorization_isLoggedIn, "f");
@@ -3665,7 +3667,7 @@ class Authorization {
     }
     logout() {
         window.sessionStorage.removeItem('userData');
-        document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         __classPrivateFieldSet(this, _Authorization_userId, null, "f");
         __classPrivateFieldSet(this, _Authorization_name, null, "f");
         __classPrivateFieldSet(this, _Authorization_email, null, "f");
@@ -3692,7 +3694,7 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
 }, _Authorization_saveUserData = function _Authorization_saveUserData({ accessToken, userId, name, email }) {
     window.sessionStorage.setItem('userData', JSON.stringify({ userId, name, email }));
     if (accessToken)
-        document.cookie = `accessToken=${accessToken}`;
+        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN}=${accessToken}`;
     __classPrivateFieldSet(this, _Authorization_userId, userId, "f");
     __classPrivateFieldSet(this, _Authorization_name, name, "f");
     __classPrivateFieldSet(this, _Authorization_email, email, "f");
@@ -3700,7 +3702,7 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
     var _a;
     const accessToken = (_a = document.cookie
         .split('; ')
-        .find((row) => row.startsWith('accessToken'))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
+        .find((row) => row.startsWith(_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
     return accessToken;
 }, _Authorization_validateRegisterData = function _Authorization_validateRegisterData(registerData) {
     const registerDataValidator = [
