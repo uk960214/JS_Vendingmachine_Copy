@@ -56,6 +56,8 @@ var _vendingMachine = /*#__PURE__*/new WeakMap();
 
 var _authorization = /*#__PURE__*/new WeakMap();
 
+var _userButtonContainer = /*#__PURE__*/new WeakMap();
+
 var _userRenderList = /*#__PURE__*/new WeakMap();
 
 var _nonUserRenderList = /*#__PURE__*/new WeakMap();
@@ -66,7 +68,7 @@ var _appContainer = /*#__PURE__*/new WeakMap();
 
 var _tabMenuNavigation = /*#__PURE__*/new WeakMap();
 
-var _userButton = /*#__PURE__*/new WeakMap();
+var _initRoutes = /*#__PURE__*/new WeakSet();
 
 var _render = /*#__PURE__*/new WeakMap();
 
@@ -78,7 +80,7 @@ var _renderNav = /*#__PURE__*/new WeakSet();
 
 var _renderTab = /*#__PURE__*/new WeakSet();
 
-var _updateUserButton = /*#__PURE__*/new WeakSet();
+var _handleUserButtonContainerClick = /*#__PURE__*/new WeakMap();
 
 var _handleSelectBoxToggle = /*#__PURE__*/new WeakMap();
 
@@ -91,8 +93,6 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
 
   (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, App);
 
-  _classPrivateMethodInitSpec(this, _updateUserButton);
-
   _classPrivateMethodInitSpec(this, _renderTab);
 
   _classPrivateMethodInitSpec(this, _renderNav);
@@ -101,12 +101,19 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
 
   _classPrivateMethodInitSpec(this, _renderUser);
 
+  _classPrivateMethodInitSpec(this, _initRoutes);
+
   _classPrivateFieldInitSpec(this, _vendingMachine, {
     writable: true,
     value: void 0
   });
 
   _classPrivateFieldInitSpec(this, _authorization, {
+    writable: true,
+    value: void 0
+  });
+
+  _classPrivateFieldInitSpec(this, _userButtonContainer, {
     writable: true,
     value: void 0
   });
@@ -136,11 +143,6 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
     value: void 0
   });
 
-  _classPrivateFieldInitSpec(this, _userButton, {
-    writable: true,
-    value: void 0
-  });
-
   _classPrivateFieldInitSpec(this, _render, {
     writable: true,
     value: function value() {
@@ -154,9 +156,18 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
     }
   });
 
+  _classPrivateFieldInitSpec(this, _handleUserButtonContainerClick, {
+    writable: true,
+    value: function value(_ref) {
+      var target = _ref.target;
+      if (target.id === 'user-button') (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _handleSelectBoxToggle).call(_this, target);
+      if (target.id === 'logout-button') (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _handleLogout).call(_this);
+    }
+  });
+
   _classPrivateFieldInitSpec(this, _handleSelectBoxToggle, {
     writable: true,
-    value: function value() {
+    value: function value(target) {
       var selectBox = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box');
 
       if (selectBox) {
@@ -164,18 +175,19 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
         return;
       }
 
-      (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _userButton).insertAdjacentHTML('afterend', _view_generalTemplate__WEBPACK_IMPORTED_MODULE_8__.userButtonSelectBoxTemplate);
-
-      (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#logout-button').addEventListener('click', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _handleLogout));
+      target.insertAdjacentHTML('afterend', _view_generalTemplate__WEBPACK_IMPORTED_MODULE_8__.userButtonSelectBoxTemplate);
     }
   });
 
   _classPrivateFieldInitSpec(this, _handleLogout, {
     writable: true,
     value: function value() {
+      var _selectDom;
+
       (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _authorization).logout();
 
-      window.location.href = '/';
+      (_selectDom = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box')) === null || _selectDom === void 0 ? void 0 : _selectDom.remove();
+      window.location.href = _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER;
     }
   });
 
@@ -202,6 +214,21 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
 
   (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _authorization, new _domain_Authorization__WEBPACK_IMPORTED_MODULE_5__["default"]());
 
+  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _appContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#app'));
+
+  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userButtonContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('.user-button-container'));
+
+  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _headerContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('header'));
+
+  _classPrivateMethodGet(this, _initRoutes, _initRoutes2).call(this);
+
+  window.addEventListener('popstate', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _render));
+  window.addEventListener('DOMContentLoaded', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _render));
+
+  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer).addEventListener('click', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _handleUserButtonContainerClick));
+});
+
+function _initRoutes2() {
   (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userRenderList, {
     '#/user-info': new _view__WEBPACK_IMPORTED_MODULE_6__.UserInfoPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), this.snackBar),
     '#/product': new _view__WEBPACK_IMPORTED_MODULE_6__.ProductTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), this.snackBar),
@@ -214,40 +241,34 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
     '#/register': new _view__WEBPACK_IMPORTED_MODULE_6__.RegisterPage((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization), this.snackBar),
     '#/purchase': new _view__WEBPACK_IMPORTED_MODULE_6__.PurchaseTab((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _vendingMachine), this.snackBar)
   });
-
-  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _appContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#app'));
-
-  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _headerContainer, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('header'));
-
-  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userButton, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button'));
-
-  window.addEventListener('popstate', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _render));
-  window.addEventListener('DOMContentLoaded', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _render));
-});
+}
 
 function _renderUser2() {
-  var _selectDom;
+  var _selectDom2, _selectDom3;
 
   var path = window.location.hash || _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.USER;
 
   _classPrivateMethodGet(this, _renderNav, _renderNav2).call(this, path);
 
-  (_selectDom = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#login-link-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _appContainer))) === null || _selectDom === void 0 ? void 0 : _selectDom.remove();
-
-  _classPrivateMethodGet(this, _updateUserButton, _updateUserButton2).call(this);
+  (_selectDom2 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#login-link-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer))) === null || _selectDom2 === void 0 ? void 0 : _selectDom2.remove();
 
   _classPrivateMethodGet(this, _renderTab, _renderTab2).call(this, (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userRenderList), path);
+
+  (_selectDom3 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box')) === null || _selectDom3 === void 0 ? void 0 : _selectDom3.remove();
+  if ((0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer))) return;
+
+  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer).insertAdjacentHTML('afterbegin', (0,_view_generalTemplate__WEBPACK_IMPORTED_MODULE_8__.userButtonTemplate)((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization).name));
 }
 
 function _renderNonUser2() {
-  var _selectDom2, _selectDom3;
+  var _selectDom4, _selectDom5;
 
   var path = window.location.hash || _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER;
-  (_selectDom2 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#tab-menu-navigation')) === null || _selectDom2 === void 0 ? void 0 : _selectDom2.remove();
-  (_selectDom3 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _appContainer))) === null || _selectDom3 === void 0 ? void 0 : _selectDom3.remove();
+  (_selectDom4 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#tab-menu-navigation')) === null || _selectDom4 === void 0 ? void 0 : _selectDom4.remove();
+  (_selectDom5 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer))) === null || _selectDom5 === void 0 ? void 0 : _selectDom5.remove();
 
-  if (!(0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#login-link-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _appContainer))) {
-    (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _appContainer).insertAdjacentHTML('afterbegin', _view_generalTemplate__WEBPACK_IMPORTED_MODULE_8__.loginLinkButtonTemplate);
+  if (!(0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#login-link-button', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer))) {
+    (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButtonContainer).insertAdjacentHTML('afterbegin', _view_generalTemplate__WEBPACK_IMPORTED_MODULE_8__.loginLinkButtonTemplate);
   }
 
   _classPrivateMethodGet(this, _renderTab, _renderTab2).call(this, (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _nonUserRenderList), path);
@@ -280,19 +301,6 @@ function _renderTab2(routeList, path) {
   }
 
   (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _appContainer).replaceChild(routeList[path].tabElements, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('main'));
-}
-
-function _updateUserButton2() {
-  var _classPrivateFieldGet2, _selectDom4;
-
-  (_classPrivateFieldGet2 = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButton)) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.remove();
-  (_selectDom4 = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box')) === null || _selectDom4 === void 0 ? void 0 : _selectDom4.remove();
-
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _appContainer).insertAdjacentHTML('afterbegin', (0,_view_generalTemplate__WEBPACK_IMPORTED_MODULE_8__.userButtonTemplate)((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _authorization).name));
-
-  (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userButton, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button'));
-
-  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _userButton).addEventListener('click', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(this, _handleSelectBoxToggle));
 }
 
 new App();
@@ -1988,7 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button, #user-button {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position:absolute;\r\n  \r\n  top: 80px;\r\n  right: 20px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: #f3f3f3;\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: #000000;\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: #000000;\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}", "",{"version":3,"sources":["webpack://./src/css/base.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;EACtB,oBAAoB;EACpB,gBAAgB;EAChB,0BAA0B;EAC1B;;wEAEsE;AACxE;;AAEA;EACE,0BAA0B;EAC1B,sCAAsC;EACtC,oCAAoC;EACpC,8CAA8C;AAChD;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,iBAAiB;EACjB,gBAAgB;EAChB,yBAAyB;EACzB,4BAA4B;EAC5B,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,kBAAkB;EAClB,SAAS;EACT,kBAAkB;AACpB;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,wCAAwC;AAC1C;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,aAAa;AACf;;AAEA,kBAAkB;AAClB,gCAAgC;AAChC;;EAEE,wBAAwB;EACxB,SAAS;AACX;;AAEA,YAAY;AACZ;EACE,0BAA0B;AAC5B;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,6BAA6B;EAC7B,UAAU;AACZ;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,MAAM;EACN,OAAO;EACP,WAAW;EACX,YAAY;EACZ,UAAU;AACZ;;AAEA;EACE,iBAAiB;;EAEjB,SAAS;EACT,WAAW;EACX,qBAAqB;EACrB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,4BAA4B;EAC5B,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,qBAAqB;EACrB,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,6BAA6B;AAC/B","sourcesContent":["@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');\r\n\r\n* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button, #user-button {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position:absolute;\r\n  \r\n  top: 80px;\r\n  right: 20px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: #f3f3f3;\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: #000000;\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: #000000;\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.user-button-container {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button {\r\n  display: block\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position:absolute;\r\n  \r\n  width: 100px;\r\n  top: 64px;\r\n  right: -15px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: #f3f3f3;\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: #000000;\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: #000000;\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}", "",{"version":3,"sources":["webpack://./src/css/base.css"],"names":[],"mappings":"AAEA;EACE,SAAS;EACT,UAAU;EACV,sBAAsB;EACtB,oBAAoB;EACpB,gBAAgB;EAChB,0BAA0B;EAC1B;;wEAEsE;AACxE;;AAEA;EACE,0BAA0B;EAC1B,sCAAsC;EACtC,oCAAoC;EACpC,8CAA8C;AAChD;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,YAAY;EACZ,iBAAiB;EACjB,gBAAgB;EAChB,yBAAyB;EACzB,4BAA4B;EAC5B,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,kBAAkB;EAClB,SAAS;EACT,kBAAkB;AACpB;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;EACT,WAAW;AACb;;AAEA;EACE,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,wCAAwC;AAC1C;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,aAAa;AACf;;AAEA,kBAAkB;AAClB,gCAAgC;AAChC;;EAEE,wBAAwB;EACxB,SAAS;AACX;;AAEA,YAAY;AACZ;EACE,0BAA0B;AAC5B;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,SAAS;AACX;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE;AACF;;AAEA;EACE,6BAA6B;EAC7B,UAAU;AACZ;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,MAAM;EACN,OAAO;EACP,WAAW;EACX,YAAY;EACZ,UAAU;AACZ;;AAEA;EACE,iBAAiB;;EAEjB,YAAY;EACZ,SAAS;EACT,YAAY;EACZ,qBAAqB;EACrB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,aAAa;EACb,mBAAmB;EACnB,4BAA4B;EAC5B,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,kDAAkD;AACpD;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,qBAAqB;EACrB,cAAc;AAChB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,6BAA6B;AAC/B","sourcesContent":["@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');\r\n\r\n* {\r\n  margin: 0;\r\n  padding: 0;\r\n  box-sizing: border-box;\r\n  word-break: keep-all;\r\n  line-height: 1.5;\r\n  /* 다양한 환경에서 동일한 글꼴 환경 세팅 */\r\n  font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto,\r\n    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',\r\n    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;\r\n}\r\n\r\n:root {\r\n  --button-bg-color: #f5f5f5;\r\n  --button-bg-highlight-color: #00bcd429;\r\n  --button-text-default-color: #000000;\r\n  --border-preset: 1px solid rgba(0, 0, 0, 0.12);\r\n}\r\n\r\nbody {\r\n  background-color: #f9f9f9;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#app {\r\n  width: 600px;\r\n  min-height: 800px;\r\n  margin-top: 32px;\r\n  background-color: #ffffff;\r\n  border: var(--border-preset);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  padding: 45px 60px;\r\n  gap: 52px;\r\n  position: relative;\r\n}\r\n\r\n.user-button-container {\r\n  position: absolute;\r\n  top: 20px;\r\n  right: 20px;\r\n}\r\n\r\n.tab-title {\r\n  text-align: center;\r\n}\r\n\r\nmain {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 52px;\r\n  width: 100%;\r\n}\r\n\r\nbutton {\r\n  padding: 8px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  background-color: var(--button-bg-color);\r\n}\r\n\r\nbutton:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\ninput:focus {\r\n  outline: none;\r\n}\r\n\r\n/* 숫자 입력란 화살표 숨김 */\r\n/* Chrome, Safari, Edge, Opera */\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}\r\n\r\n/* Firefox */\r\ninput[type='number'] {\r\n  -moz-appearance: textfield;\r\n}\r\n\r\n.not-found-section {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  gap: 20px;\r\n}\r\n\r\n.not-found-section h2 {\r\n  text-align: center;\r\n}\r\n\r\n#login-link-button {\r\n  display: block\r\n}\r\n\r\n#user-button {\r\n  background-color: transparent;\r\n  z-index: 0;\r\n}\r\n\r\n#user-button::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  z-index: 1;\r\n}\r\n\r\n#user-button-select-box {\r\n  position:absolute;\r\n  \r\n  width: 100px;\r\n  top: 64px;\r\n  right: -15px;\r\n  list-style-type: none;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n}\r\n\r\n#user-button-select-box li {\r\n  width: 100%;\r\n  height: 40px;\r\n  display: flex;\r\n  align-items: center;\r\n  border: var(--border-preset);\r\n  background-color: #f3f3f3;\r\n  text-align: center;\r\n}\r\n\r\n#user-button-select-box li:hover {\r\n  background-color: var(--button-bg-highlight-color);\r\n}\r\n\r\n#user-info-link {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  text-decoration: none;\r\n  color: #000000;\r\n}\r\n\r\n#user-info-link:visited {\r\n  color: #000000;\r\n}\r\n\r\n#logout-button {\r\n  width: 100%;\r\n  height: 100%;\r\n  padding: 5px 10px;\r\n  font-size: 1rem;\r\n  border-radius: 0;\r\n}\r\n\r\n#logout-button:hover {\r\n  background-color: transparent;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
