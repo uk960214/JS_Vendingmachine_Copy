@@ -187,8 +187,7 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
       (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _authorization).logout();
 
       (_selectDom = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box')) === null || _selectDom === void 0 ? void 0 : _selectDom.remove();
-      window.location.href = _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER;
-      window.location.reload();
+      window.location.href = _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER; // window.location.reload();
     }
   });
 
