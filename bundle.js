@@ -3641,6 +3641,7 @@ class Authorization {
             __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_validateUpdateData).call(this, userInputData);
             const updateData = userInputData;
             delete updateData.passwordConfirm;
+            console.log(__classPrivateFieldGet(this, _Authorization_accessToken, "f"));
             const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users/${__classPrivateFieldGet(this, _Authorization_userId, "f")}`, {
                 method: 'PATCH',
                 headers: {
@@ -3703,6 +3704,7 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
     const accessToken = (_a = document.cookie
         .split('; ')
         .find((row) => row.startsWith(_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
+    console.log(accessToken);
     return accessToken;
 }, _Authorization_validateRegisterData = function _Authorization_validateRegisterData(registerData) {
     const registerDataValidator = [
