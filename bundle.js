@@ -187,7 +187,8 @@ var App = /*#__PURE__*/(0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_M
       (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_2__["default"])(_this, _authorization).logout();
 
       (_selectDom = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-button-select-box')) === null || _selectDom === void 0 ? void 0 : _selectDom.remove();
-      window.location.href = _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER; // window.location.reload();
+      window.location.href = _constants__WEBPACK_IMPORTED_MODULE_10__.DEFAULT_ROUTE.NON_USER;
+      window.location.reload();
     }
   });
 
@@ -1805,14 +1806,12 @@ var UserInfoPage = /*#__PURE__*/function () {
                   _context.prev = 2;
                   updateData = {
                     email: email,
-                    name: name,
-                    password: password,
-                    passwordConfirm: passwordConfirm
+                    name: name
                   };
 
-                  if (password) {
-                    updateData[password] = password;
-                    updateData[passwordConfirm] = passwordConfirm;
+                  if (password !== '') {
+                    updateData.password = password;
+                    updateData.passwordConfirm = passwordConfirm;
                   }
 
                   _context.next = 7;
@@ -3641,7 +3640,6 @@ class Authorization {
             __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_validateUpdateData).call(this, userInputData);
             const updateData = userInputData;
             delete updateData.passwordConfirm;
-            console.log(__classPrivateFieldGet(this, _Authorization_accessToken, "f"));
             const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users/${__classPrivateFieldGet(this, _Authorization_userId, "f")}`, {
                 method: 'PATCH',
                 headers: {
@@ -3691,11 +3689,15 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
     if (!savedUserData)
         return;
     const { userId, name, email } = savedUserData;
-    __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_saveUserData).call(this, { userId, name, email });
+    __classPrivateFieldSet(this, _Authorization_userId, userId, "f");
+    __classPrivateFieldSet(this, _Authorization_name, name, "f");
+    __classPrivateFieldSet(this, _Authorization_email, email, "f");
 }, _Authorization_saveUserData = function _Authorization_saveUserData({ accessToken, userId, name, email }) {
     window.sessionStorage.setItem('userData', JSON.stringify({ userId, name, email }));
-    if (accessToken)
-        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN}=${accessToken}`;
+    if (accessToken) {
+        document.cookie = `${_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN}=${accessToken}; path=/;`;
+        __classPrivateFieldSet(this, _Authorization_accessToken, accessToken, "f");
+    }
     __classPrivateFieldSet(this, _Authorization_userId, userId, "f");
     __classPrivateFieldSet(this, _Authorization_name, name, "f");
     __classPrivateFieldSet(this, _Authorization_email, email, "f");
@@ -3704,7 +3706,6 @@ _Authorization_isLoggedIn = new WeakMap(), _Authorization_userId = new WeakMap()
     const accessToken = (_a = document.cookie
         .split('; ')
         .find((row) => row.startsWith(_constants__WEBPACK_IMPORTED_MODULE_0__.ACCESS_TOKEN))) === null || _a === void 0 ? void 0 : _a.split('=')[1];
-    console.log(accessToken);
     return accessToken;
 }, _Authorization_validateRegisterData = function _Authorization_validateRegisterData(registerData) {
     const registerDataValidator = [
