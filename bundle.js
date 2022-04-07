@@ -379,7 +379,8 @@ function emptyFormInputs(form) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "pickNumberInRange": () => (/* binding */ pickNumberInRange),
-/* harmony export */   "generateUniqueId": () => (/* binding */ generateUniqueId)
+/* harmony export */   "generateUniqueId": () => (/* binding */ generateUniqueId),
+/* harmony export */   "removeProperty": () => (/* binding */ removeProperty)
 /* harmony export */ });
 function pickNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -401,6 +402,13 @@ function generateUniqueId(list) {
   }
 
   return newId;
+}
+function removeProperty(object, property) {
+  return Object.keys(object).reduce(function (accObject, key) {
+    if (key === property) return accObject;
+    accObject[key] = object[key];
+    return accObject;
+  }, {});
 }
 
 /***/ }),
@@ -583,7 +591,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var chargeTabTemplate =
 /* html */
-"\n<section class=\"form-section\" aria-labelledby=\"charge-tab-title\">\n  <h2 class=\"tab-title\" id=\"charge-tab-title\">\uC794\uB3C8 \uCDA9\uC804\uD558\uAE30</h2>\n  <form id=\"add-change-form\">\n    <div class=\"instructions\">\n      <h3>\uD83D\uDCB0 \uC794\uB3C8 \uCDA9\uC804 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n      <ul class=\"instructions-list\">\n        <li>\uCD5C\uC18C \uCDA9\uC804 \uAE08\uC561: 10\uC6D0</li>\n        <li>\uCD5C\uB300 \uCDA9\uC804 \uAC00\uB2A5 \uAE08\uC561: 100,000\uC6D0</li>\n      </ul>\n    </div>\n    <label for=\"change\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n    <div class=\"input-form-wrapper\">\n      <input type=\"number\" id=\"money-input\" placeholder=\"\uAE08\uC561\" name=\"change\" min=\"10\" max=\"100000\" step=\"10\" required/>\n      <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n    </div>\n  </form>\n  <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n</section>\n<table class=\"coin-status-table\">\n  <caption>\n    \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n  </caption>\n  <tr>\n    <th>\uB3D9\uC804</th>\n    <th>\uAC1C\uC218</th>\n  </tr>\n  <tr>\n    <td>500\uC6D0</td>\n    <td data-coin-name='".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_500_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>100\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_100_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>50\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_50_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>10\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_10_WON, "'>0\uAC1C</td>\n  </tr>\n</table>\n");
+"\n<section class=\"form-section\" aria-labelledby=\"charge-tab-title\">\n  <h2 class=\"tab-title\" id=\"charge-tab-title\">\uC794\uB3C8 \uCDA9\uC804\uD558\uAE30</h2>\n  <form id=\"add-change-form\">\n    <details class=\"instruction-toggle\">\n      <summary class=\"instructions-title\">\uD83D\uDCB0 \uC794\uB3C8 \uCDA9\uC804 \uC2DC \uC720\uC758 \uC0AC\uD56D</summary>\n      <div class=\"instructions\">\n        <ul class=\"instructions-list\">\n          <li>\uCD5C\uC18C \uCDA9\uC804 \uAE08\uC561: 10\uC6D0</li>\n          <li>\uCD5C\uB300 \uCDA9\uC804 \uAC00\uB2A5 \uAE08\uC561: 100,000\uC6D0</li>\n        </ul>\n      </div>\n    </details>\n    <label for=\"change\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n    <div class=\"input-form-wrapper\">\n      <input type=\"number\" id=\"money-input\" placeholder=\"\uAE08\uC561\" name=\"change\" min=\"10\" max=\"100000\" step=\"10\" required/>\n      <button type=\"submit\" class=\"submit-button\">\uCDA9\uC804</button>\n    </div>\n  </form>\n  <p>\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span id=\"total-change\">0</span>\uC6D0</p>\n</section>\n<table class=\"coin-status-table\">\n  <caption>\n    \uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804\n  </caption>\n  <tr>\n    <th>\uB3D9\uC804</th>\n    <th>\uAC1C\uC218</th>\n  </tr>\n  <tr>\n    <td>500\uC6D0</td>\n    <td data-coin-name='".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_500_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>100\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_100_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>50\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_50_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>10\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_10_WON, "'>0\uAC1C</td>\n  </tr>\n</table>\n");
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (chargeTabTemplate);
 
 /***/ }),
@@ -1065,7 +1073,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var productTabTemplate =
 /* html */
-"\n<section class=\"form-section\" aria-labelledby=\"product-tab-title\">\n  <h2 class=\"tab-title\" id=\"product-tab-title\">\uC0C1\uD488 \uCD94\uAC00\uD558\uAE30</h2>\n  <form id=\"add-product-form\">\n    <div class=\"instructions\">\n      <h3>\uD83D\uDED2\uC0C1\uD488 \uCD94\uAC00 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n      <ul class=\"instructions-list\">\n        <li>\uC0C1\uD488\uBA85: 1\uC790 \uC774\uC0C1 10\uC790 \uC774\uD558</li>\n        <li>\uAC00\uACA9: 100\uC6D0 \uC774\uC0C1 10000\uC6D0 \uC774\uD558, 10\uC6D0 \uB2E8\uC704</li>\n        <li>\uC218\uB7C9: 1\uAC1C \uC774\uC0C1 20\uAC1C \uC774\uD558</li>\n      </ul>\n    </div>\n    <fieldset>\n      <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n      <div class=\"input-wrapper\">\n        <label for=\"name\">\uC0C1\uD488\uBA85\n        <input type=\"text\" name=\"name\" id=\"product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n        </label>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"price\">\uC0C1\uD488 \uAC00\uACA9</label>\n        <input type=\"number\" name=\"price\" id=\"product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"stock\">\uC0C1\uD488 \uC218\uB7C9</label>\n        <input type=\"number\" name=\"stock\" id=\"product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n      </div>\n      <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n    </fieldset>\n  </form>\n</section>\n<table class=\"product-status-table\">\n  <caption>\n    \uC0C1\uD488 \uD604\uD669\n  </caption>\n  <tr>\n    <th>\uC0C1\uD488\uBA85</th>\n    <th>\uAC00\uACA9</th>\n    <th>\uC218\uB7C9</th>\n    <th>\uAD00\uB9AC</th>\n  </tr>\n</table>\n";
+"\n<section class=\"form-section\" aria-labelledby=\"product-tab-title\">\n  <h2 class=\"tab-title\" id=\"product-tab-title\">\uC0C1\uD488 \uCD94\uAC00\uD558\uAE30</h2>\n  <form id=\"add-product-form\">\n    <details class=\"instruction-toggle\">\n      <summary class=\"instructions-title\">\uD83D\uDED2\uC0C1\uD488 \uCD94\uAC00 \uC2DC \uC720\uC758 \uC0AC\uD56D</summary>\n      <div class=\"instructions\">\n        <ul class=\"instructions-list\">\n          <li>\uC0C1\uD488\uBA85: 1\uC790 \uC774\uC0C1 10\uC790 \uC774\uD558</li>\n          <li>\uAC00\uACA9: 100\uC6D0 \uC774\uC0C1 10000\uC6D0 \uC774\uD558, 10\uC6D0 \uB2E8\uC704</li>\n          <li>\uC218\uB7C9: 1\uAC1C \uC774\uC0C1 20\uAC1C \uC774\uD558</li>\n        </ul>\n      </div>\n    </details>\n    <fieldset>\n      <legend>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n      <div class=\"input-wrapper\">\n        <label for=\"name\">\uC0C1\uD488\uBA85\n        <input type=\"text\" name=\"name\" id=\"product-name-input\" placeholder=\"\uC0C1\uD488\uBA85\" required/>\n        </label>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"price\">\uC0C1\uD488 \uAC00\uACA9</label>\n        <input type=\"number\" name=\"price\" id=\"product-price-input\" placeholder=\"\uAC00\uACA9\" min=\"100\" max=\"10000\" required/>\n      </div>\n      <div class=\"input-wrapper\">\n        <label for=\"stock\">\uC0C1\uD488 \uC218\uB7C9</label>\n        <input type=\"number\" name=\"stock\" id=\"product-stock-input\" placeholder=\"\uC218\uB7C9\" min=\"1\" max=\"20\" required/>\n      </div>\n      <button type=\"submit\" class=\"submit-button\">\uCD94\uAC00</button>\n    </fieldset>\n  </form>\n</section>\n<table class=\"product-status-table\">\n  <caption>\n    \uC0C1\uD488 \uD604\uD669\n  </caption>\n  <tr>\n    <th>\uC0C1\uD488\uBA85</th>\n    <th>\uAC00\uACA9</th>\n    <th>\uC218\uB7C9</th>\n    <th>\uAD00\uB9AC</th>\n  </tr>\n</table>\n";
 var productTableRowTemplate = function productTableRowTemplate(_ref) {
   var name = _ref.name,
       price = _ref.price,
@@ -1384,7 +1392,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var purchaseTabTemplate =
 /* html */
-"\n<section class=\"form-section\" aria-labelledby=\"purchase-tab-title\">\n  <h2 class=\"tab-title\" id=\"purchase-tab-title\">\uC0C1\uD488 \uAD6C\uB9E4\uD558\uAE30</h2>\n  \n  <form id=\"user-money-form\">\n    <div class=\"instructions\">\n      <h3>\uD83D\uDED2\uAE08\uC561 \uD22C\uC785 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n      <ul class=\"instructions-list\">\n        <li>\uAE08\uC561\uC740 \uCD5C\uC18C 10\uC6D0, \uCD5C\uB300 10000\uC6D0\uAE4C\uC9C0 \uD22C\uC785\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n        <li>\uD22C\uC785\uD55C \uAE08\uC561\uC73C\uB85C \uC0C1\uD488 \uAD6C\uB9E4 \uD6C4 \uC794\uC561\uC774 \uB0A8\uC740 \uACBD\uC6B0 \uD558\uB2E8\uC758 \uC794\uB3C8 \uBC18\uD658 \uBC84\uD2BC\uC73C\uB85C \uBC18\uD658\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n        <li>\uC790\uD310\uAE30\uC758 \uC794\uB3C8\uC758 \uC0C1\uD0DC\uC5D0 \uB530\uB77C \uC794\uC561\uC744 \uBAA8\uB450 \uBC18\uD658\uD558\uC9C0 \uBABB\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n      </ul>\n    </div>\n    <label for=\"user-money\">\uC0C1\uD488\uC744 \uAD6C\uB9E4\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n    <div class=\"input-form-wrapper\">\n      <input type=\"number\" id=\"user-money-input\" placeholder=\"\uAE08\uC561\" name=\"user-money\" min=\"10\" max=\"10000\" step=\"10\" required/>\n      <button type=\"submit\" class=\"submit-button\">\uD22C\uC785</button>\n    </div>\n  </form>\n  <p>\uD22C\uC785\uD55C \uAE08\uC561: <span id=\"total-insert\">0</span>\uC6D0</p>\n</section>\n<table class=\"product-status-table\">\n  <caption>\n    \uAD6C\uB9E4 \uAC00\uB2A5\uD55C \uC0C1\uD488 \uD604\uD669\n  </caption>\n  <tr>\n    <th>\uC0C1\uD488\uBA85</th>\n    <th>\uAC00\uACA9</th>\n    <th>\uC218\uB7C9</th>\n    <th>\uAD00\uB9AC</th>\n  </tr>\n</table>\n<table class=\"coin-status-table\">\n  <caption>\n    \uC794\uB3C8 \uBC18\uD658\n  </caption>\n  <tr>\n    <th>\uB3D9\uC804</th>\n    <th>\uAC1C\uC218</th>\n  </tr>\n  <tr>\n    <td>500\uC6D0</td>\n    <td data-coin-name='".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_500_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>100\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_100_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>50\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_50_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>10\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_10_WON, "'>0\uAC1C</td>\n  </tr>\n</table>\n<button type=\"button\" id=\"return-change-button\">\uBC18\uD658</button>\n");
+"\n<section class=\"form-section\" aria-labelledby=\"purchase-tab-title\">\n  <h2 class=\"tab-title\" id=\"purchase-tab-title\">\uC0C1\uD488 \uAD6C\uB9E4\uD558\uAE30</h2>\n  \n  <form id=\"user-money-form\">\n    <details class=\"instruction-toggle\">\n      <summary class=\"instructions-title\">\uD83D\uDED2\uAE08\uC561 \uD22C\uC785 \uC2DC \uC720\uC758 \uC0AC\uD56D</summary>\n      <div class=\"instructions\">\n        <ul class=\"instructions-list\">\n          <li>\uAE08\uC561\uC740 \uCD5C\uC18C 10\uC6D0, \uCD5C\uB300 10000\uC6D0\uAE4C\uC9C0 \uD22C\uC785\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n          <li>\uD22C\uC785\uD55C \uAE08\uC561\uC73C\uB85C \uC0C1\uD488 \uAD6C\uB9E4 \uD6C4 \uC794\uC561\uC774 \uB0A8\uC740 \uACBD\uC6B0 \uD558\uB2E8\uC758 \uC794\uB3C8 \uBC18\uD658 \uBC84\uD2BC\uC73C\uB85C \uBC18\uD658\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n          <li>\uC790\uD310\uAE30\uC758 \uC794\uB3C8\uC758 \uC0C1\uD0DC\uC5D0 \uB530\uB77C \uC794\uC561\uC744 \uBAA8\uB450 \uBC18\uD658\uD558\uC9C0 \uBABB\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n        </ul>\n      </div>\n    </details>\n    <label for=\"user-money\">\uC0C1\uD488\uC744 \uAD6C\uB9E4\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694</label>\n    <div class=\"input-form-wrapper\">\n      <input type=\"number\" id=\"user-money-input\" placeholder=\"\uAE08\uC561\" name=\"user-money\" min=\"10\" max=\"10000\" step=\"10\" required/>\n      <button type=\"submit\" class=\"submit-button\">\uD22C\uC785</button>\n    </div>\n  </form>\n  <p>\uD22C\uC785\uD55C \uAE08\uC561: <span id=\"total-insert\">0</span>\uC6D0</p>\n</section>\n<table class=\"product-status-table\">\n  <caption>\n    \uAD6C\uB9E4 \uAC00\uB2A5\uD55C \uC0C1\uD488 \uD604\uD669\n  </caption>\n  <tr>\n    <th>\uC0C1\uD488\uBA85</th>\n    <th>\uAC00\uACA9</th>\n    <th>\uC218\uB7C9</th>\n    <th>\uAD00\uB9AC</th>\n  </tr>\n</table>\n<table class=\"coin-status-table\">\n  <caption>\n    \uC794\uB3C8 \uBC18\uD658\n  </caption>\n  <tr>\n    <th>\uB3D9\uC804</th>\n    <th>\uAC1C\uC218</th>\n  </tr>\n  <tr>\n    <td>500\uC6D0</td>\n    <td data-coin-name='".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_500_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>100\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_100_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>50\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_50_WON, "'>0\uAC1C</td>\n  </tr>\n  <tr>\n    <td>10\uC6D0</td>\n    <td data-coin-name='").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.MONEY_NAME_STRING.COIN_10_WON, "'>0\uAC1C</td>\n  </tr>\n</table>\n<button type=\"button\" id=\"return-change-button\">\uBC18\uD658</button>\n");
 var purchaseProductTableRowTemplate = function purchaseProductTableRowTemplate(_ref) {
   var name = _ref.name,
       price = _ref.price,
@@ -1557,7 +1565,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var registerPageTemplate =
 /* html */
-"\n  <h2>\uD68C\uC6D0\uAC00\uC785</h2>\n  <div class=\"instructions\">\n    <h3>\uD83D\uDC68\u200D\uD83C\uDFEB \uD68C\uC6D0\uAC00\uC785 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n    <ul class=\"instructions-list\">\n      <li>\uBAA8\uB4E0 \uD56D\uBAA9\uC740 \uD544\uC218\uB85C \uC791\uC131\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n      <li>\uC774\uBA54\uC77C\uC740 \uC911\uBCF5\uB420 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.</li>\n      <li>\uC774\uB984\uC740 2\uC790-6\uC790 \uAE38\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.</li>\n      <li>\uBE44\uBC00\uBC88\uD638\uB294 8\uC790 \uC774\uC0C1 20\uC790 \uC774\uD558\uC758 \uAE38\uC774\uB85C \uC601\uC18C\uBB38\uC790, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790\uB97C \uD3EC\uD568\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n    </ul>\n  </div>\n  <form class=\"auth-form\">\n    <label for=\"email\">\uC774\uBA54\uC77C</label>\n    <input\n      type=\"email\"\n      name=\"email\"\n      id=\"email-input\"\n      placeholder=\"\uC774\uBA54\uC77C\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"name\">\uC774\uB984</label>\n    <input\n      type=\"text\"\n      name=\"name\"\n      id=\"name-input\"\n      placeholder=\"\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n    <input\n      type=\"password\"\n      name=\"password\"\n      id=\"password-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n    <input\n      type=\"password\"\n      name=\"password-confirm\"\n      id=\"password-confirm-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uB2E4\uC2DC \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <button type=\"submit\" class=\"submit-button\">\uD68C\uC6D0\uAC00\uC785</button>\n    <p>\uC774\uBBF8 \uD68C\uC6D0\uC774\uC2E0\uAC00\uC694? <a href=\"#/login\">\uB85C\uADF8\uC778</a></p>\n  </form>\n";
+"\n  <h2>\uD68C\uC6D0\uAC00\uC785</h2>\n  <details class=\"instruction-toggle\">\n    <summary class=\"instructions-title\">\uD83D\uDC68\u200D\uD83C\uDFEB \uD68C\uC6D0\uAC00\uC785 \uC2DC \uC720\uC758 \uC0AC\uD56D</summary>\n    <div class=\"instructions\">\n      <ul class=\"instructions-list\">\n        <li>\uBAA8\uB4E0 \uD56D\uBAA9\uC740 \uD544\uC218\uB85C \uC791\uC131\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n        <li>\uC774\uBA54\uC77C\uC740 \uC911\uBCF5\uB420 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.</li>\n        <li>\uC774\uB984\uC740 2\uC790-6\uC790 \uAE38\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.</li>\n        <li>\uBE44\uBC00\uBC88\uD638\uB294 8\uC790 \uC774\uC0C1 20\uC790 \uC774\uD558\uC758 \uAE38\uC774\uB85C \uC601\uC18C\uBB38\uC790, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790\uB97C \uD3EC\uD568\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n      </ul>\n    </div>\n  </details>\n  <form class=\"auth-form\">\n    <label for=\"email\">\uC774\uBA54\uC77C</label>\n    <input\n      type=\"email\"\n      name=\"email\"\n      id=\"email-input\"\n      placeholder=\"\uC774\uBA54\uC77C\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"name\">\uC774\uB984</label>\n    <input\n      type=\"text\"\n      name=\"name\"\n      id=\"name-input\"\n      placeholder=\"\uC774\uB984\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n    <input\n      type=\"password\"\n      name=\"password\"\n      id=\"password-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n    <input\n      type=\"password\"\n      name=\"password-confirm\"\n      id=\"password-confirm-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uB2E4\uC2DC \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <button type=\"submit\" class=\"submit-button\">\uD68C\uC6D0\uAC00\uC785</button>\n    <p>\uC774\uBBF8 \uD68C\uC6D0\uC774\uC2E0\uAC00\uC694? <a href=\"#/login\">\uB85C\uADF8\uC778</a></p>\n  </form>\n";
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (registerPageTemplate);
 
 /***/ }),
@@ -1718,16 +1726,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ UserInfoPage)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldGet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js");
-/* harmony import */ var _babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldSet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.ts");
-/* harmony import */ var _UserInfoPageTemplate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./UserInfoPageTemplate */ "./src/js/view/UserInfoPage/UserInfoPageTemplate.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldGet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldGet.js");
+/* harmony import */ var _babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/classPrivateFieldSet */ "./node_modules/@babel/runtime/helpers/esm/classPrivateFieldSet.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/dom */ "./src/js/utils/dom.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../constants */ "./src/js/constants/index.ts");
+/* harmony import */ var _UserInfoPageTemplate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./UserInfoPageTemplate */ "./src/js/view/UserInfoPage/UserInfoPageTemplate.js");
+
 
 
 
@@ -1757,7 +1767,7 @@ var UserInfoPage = /*#__PURE__*/function () {
   function UserInfoPage(authorization, snackBar) {
     var _this = this;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, UserInfoPage);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, UserInfoPage);
 
     _classPrivateFieldInitSpec(this, _snackbar, {
       writable: true,
@@ -1782,15 +1792,15 @@ var UserInfoPage = /*#__PURE__*/function () {
     _classPrivateFieldInitSpec(this, _handleUpdateUserInfo, {
       writable: true,
       value: function () {
-        var _value = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee(e) {
-          var _getInputValuesFromFo, email, name, password, passwordConfirm, updateData, message;
+        var _value = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee(e) {
+          var _getInputValuesFromFo, email, name, password, passwordConfirm, updateData, _classPrivateFieldGet2, message;
 
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee$(_context) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
                   e.preventDefault();
-                  _getInputValuesFromFo = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_6__.getInputValuesFromForm)(e.target), email = _getInputValuesFromFo.email, name = _getInputValuesFromFo.name, password = _getInputValuesFromFo.password, passwordConfirm = _getInputValuesFromFo['password-confirm'];
+                  _getInputValuesFromFo = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.getInputValuesFromForm)(e.target), email = _getInputValuesFromFo.email, name = _getInputValuesFromFo.name, password = _getInputValuesFromFo.password, passwordConfirm = _getInputValuesFromFo['password-confirm'];
                   _context.prev = 2;
                   updateData = {
                     email: email,
@@ -1803,27 +1813,29 @@ var UserInfoPage = /*#__PURE__*/function () {
                   }
 
                   _context.next = 7;
-                  return (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(_this, _authorization).update(updateData);
+                  return (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _authorization).update(updateData);
 
                 case 7:
-                  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(_this, _snackbar).addToMessageList(_constants__WEBPACK_IMPORTED_MODULE_7__.USER_DATA_CHANGED_MESSAGE);
+                  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _snackbar).addToMessageList(_constants__WEBPACK_IMPORTED_MODULE_8__.USER_DATA_CHANGED_MESSAGE);
 
-                  _context.next = 14;
+                  _classPrivateFieldGet2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _authorization).name, 1);
+                  (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#user-name-text').textContent = _classPrivateFieldGet2[0];
+                  _context.next = 16;
                   break;
 
-                case 10:
-                  _context.prev = 10;
+                case 12:
+                  _context.prev = 12;
                   _context.t0 = _context["catch"](2);
                   message = _context.t0.message;
 
-                  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(_this, _snackbar).addToMessageList(message);
+                  (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(_this, _snackbar).addToMessageList(message);
 
-                case 14:
+                case 16:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[2, 10]]);
+          }, _callee, null, [[2, 12]]);
         }));
 
         function value(_x) {
@@ -1834,23 +1846,23 @@ var UserInfoPage = /*#__PURE__*/function () {
       }()
     });
 
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _snackbar, snackBar);
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _snackbar, snackBar);
 
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _authorization, authorization);
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _authorization, authorization);
 
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoPage, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_6__.createMainElement)((0,_UserInfoPageTemplate__WEBPACK_IMPORTED_MODULE_8__["default"])((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _authorization))));
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _userInfoPage, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.createMainElement)((0,_UserInfoPageTemplate__WEBPACK_IMPORTED_MODULE_9__["default"])((0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _authorization))));
 
-    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_6__.selectDom)('.auth-form', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userInfoPage)));
+    (0,_babel_runtime_helpers_classPrivateFieldSet__WEBPACK_IMPORTED_MODULE_5__["default"])(this, _userInfoForm, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('.auth-form', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoPage)));
 
-    (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userInfoForm).addEventListener('submit', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _handleUpdateUserInfo));
+    (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoForm).addEventListener('submit', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _handleUpdateUserInfo));
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(UserInfoPage, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(UserInfoPage, [{
     key: "tabElements",
     get: function get() {
-      (0,_utils_dom__WEBPACK_IMPORTED_MODULE_6__.selectDom)('#email-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userInfoForm)).value = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _authorization).email;
-      (0,_utils_dom__WEBPACK_IMPORTED_MODULE_6__.selectDom)('#name-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userInfoForm)).value = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _authorization).name;
-      return (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_3__["default"])(this, _userInfoPage);
+      (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#email-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoForm)).value = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _authorization).email;
+      (0,_utils_dom__WEBPACK_IMPORTED_MODULE_7__.selectDom)('#name-input', (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoForm)).value = (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _authorization).name;
+      return (0,_babel_runtime_helpers_classPrivateFieldGet__WEBPACK_IMPORTED_MODULE_4__["default"])(this, _userInfoPage);
     }
   }]);
 
@@ -1877,7 +1889,7 @@ var userInfoPageTemplate = function userInfoPageTemplate(_ref) {
       name = _ref.name;
   return (
     /* html */
-    "\n  <h2>\uD68C\uC6D0 \uC815\uBCF4 \uC218\uC815</h2>\n  <div class=\"instructions\">\n    <h3>\uD83D\uDC68\u200D\uD83C\uDFEB \uD68C\uC6D0\uC815\uBCF4 \uC218\uC815 \uC2DC \uC720\uC758 \uC0AC\uD56D</h3>\n    <ul class=\"instructions-list\">\n      <li>\uC774\uBA54\uC77C\uC740 \uC218\uC815\uC774 \uBD88\uAC00\uB2A5\uD569\uB2C8\uB2E4.</li>\n      <li>\uC815\uBCF4\uC758 \uC77C\uBD80\uB97C \uBCC0\uACBD\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n      <li>\uBE44\uBC00\uBC88\uD638\uB97C \uC218\uC815\uD558\uACE0\uC790 \uD558\uC9C0 \uC54A\uB294\uB2E4\uBA74 \uBE44\uBC00\uBC88\uD638 \uC785\uB825\uB780\uACFC \uD655\uC778\uB780\uC744 \uC785\uB825\uD558\uC9C0 \uB9C8\uC138\uC694.</li>\n      <li>\uC774\uB984\uC740 2\uC790-6\uC790 \uAE38\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.</li>\n      <li>\uBE44\uBC00\uBC88\uD638\uB294 8\uC790 \uC774\uC0C1 20\uC790 \uC774\uD558\uC758 \uAE38\uC774\uB85C \uC601\uC18C\uBB38\uC790, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790\uB97C \uD3EC\uD568\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n    </ul>\n  </div>\n  <form class=\"auth-form\">\n    <label for=\"email\">\uC774\uBA54\uC77C</label>\n    <input\n      type=\"email\"\n      name=\"email\"\n      id=\"email-input\"\n      value=\"".concat(email, "\"\n      disabled\n    />\n    <label for=\"name\">\uC774\uB984</label>\n    <input\n      type=\"text\"\n      name=\"name\"\n      id=\"name-input\"\n      value=\"").concat(name, "\"\n    />\n    <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n    <input\n      type=\"password\"\n      name=\"password\"\n      id=\"password-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uBCC0\uACBD\uD558\uB824\uBA74 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n    <input\n      type=\"password\"\n      name=\"password-confirm\"\n      id=\"password-confirm-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uBCC0\uACBD\uD558\uB824\uBA74 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <button type=\"submit\" class=\"submit-button\">\uC218\uC815\uD558\uAE30</button>\n  </form>\n")
+    "\n  <h2>\uD68C\uC6D0 \uC815\uBCF4 \uC218\uC815</h2>\n  <details class=\"instruction-toggle\">\n    <summary class=\"instructions-title\">\uD83D\uDC68\u200D\uD83C\uDFEB \uD68C\uC6D0\uC815\uBCF4 \uC218\uC815 \uC2DC \uC720\uC758 \uC0AC\uD56D</summary>\n    <div class=\"instructions\">\n      <ul class=\"instructions-list\">\n        <li>\uC774\uBA54\uC77C\uC740 \uC218\uC815\uC774 \uBD88\uAC00\uB2A5\uD569\uB2C8\uB2E4.</li>\n        <li>\uC815\uBCF4\uC758 \uC77C\uBD80\uB97C \uBCC0\uACBD\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.</li>\n        <li>\uBE44\uBC00\uBC88\uD638\uB97C \uC218\uC815\uD558\uACE0\uC790 \uD558\uC9C0 \uC54A\uB294\uB2E4\uBA74 \uBE44\uBC00\uBC88\uD638 \uC785\uB825\uB780\uACFC \uD655\uC778\uB780\uC744 \uC785\uB825\uD558\uC9C0 \uB9C8\uC138\uC694.</li>\n        <li>\uC774\uB984\uC740 2\uC790-6\uC790 \uAE38\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.</li>\n        <li>\uBE44\uBC00\uBC88\uD638\uB294 8\uC790 \uC774\uC0C1 20\uC790 \uC774\uD558\uC758 \uAE38\uC774\uB85C \uC601\uC18C\uBB38\uC790, \uC22B\uC790, \uD2B9\uC218\uBB38\uC790\uB97C \uD3EC\uD568\uD574\uC57C \uD569\uB2C8\uB2E4.</li>\n      </ul>\n  </details>\n  </div>\n  <form class=\"auth-form\">\n    <label for=\"email\">\uC774\uBA54\uC77C</label>\n    <input\n      type=\"email\"\n      name=\"email\"\n      id=\"email-input\"\n      value=\"".concat(email, "\"\n      disabled\n    />\n    <label for=\"name\">\uC774\uB984</label>\n    <input\n      type=\"text\"\n      name=\"name\"\n      id=\"name-input\"\n      value=\"").concat(name, "\"\n    />\n    <label for=\"password\">\uBE44\uBC00\uBC88\uD638</label>\n    <input\n      type=\"password\"\n      name=\"password\"\n      id=\"password-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uBCC0\uACBD\uD558\uB824\uBA74 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <label for=\"password-confirm\">\uBE44\uBC00\uBC88\uD638 \uD655\uC778</label>\n    <input\n      type=\"password\"\n      name=\"password-confirm\"\n      id=\"password-confirm-input\"\n      placeholder=\"\uBE44\uBC00\uBC88\uD638\uB97C \uBCC0\uACBD\uD558\uB824\uBA74 \uC785\uB825\uD574\uC8FC\uC138\uC694.\"\n    />\n    <button type=\"submit\" class=\"submit-button\">\uC218\uC815\uD558\uAE30</button>\n  </form>\n")
   );
 };
 
@@ -2037,7 +2049,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".form-section {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\r\n  width: 90%;\r\n}\r\n\r\nfieldset {\r\n  border: none;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: flex-end;\r\n  gap: 5px;\r\n}\r\n\r\nlegend {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n\r\n.input-wrapper {\r\n  width: 120px;\r\n}\r\n\r\n.input-form-wrapper {\r\n  margin: 0 auto;\r\n}\r\n\r\ninput {\r\n  width: 110px;\r\n  border: 1px solid #b4b4b4;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n}\r\n\r\n.submit-button {\r\n  height: 40px;\r\n  padding: 10px 15px;\r\n  background-color: #00bcd4;\r\n  font-weight: bold;\r\n  color: white;\r\n}\r\n\r\n.submit-button:hover {\r\n  background-color: #80deea;\r\n  color: #424242;\r\n}\r\n\r\nform {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 15px;\r\n}\r\n\r\n#add-change-form input,\r\n#user-money-form input {\r\n  width: 300px;\r\n}\r\n\r\n.instructions {\r\n  background-color: #f3f3f3;\r\n  padding: 10px 20px;\r\n  border-radius: 4px;\r\n  width: 400px;\r\n  margin: 0 auto;\r\n}\r\n\r\n.instructions-list {\r\n  text-align: left;\r\n  padding-left: 30px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 5px;\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/css/form.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,sBAAsB;EACtB,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,YAAY;EACZ,aAAa;EACb,uBAAuB;EACvB,qBAAqB;EACrB,QAAQ;AACV;;AAEA;EACE,kBAAkB;AACpB;;;AAGA;EACE,YAAY;AACd;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,YAAY;EACZ,yBAAyB;EACzB,kBAAkB;EAClB,YAAY;AACd;;AAEA;EACE,YAAY;EACZ,kBAAkB;EAClB,yBAAyB;EACzB,iBAAiB;EACjB,YAAY;AACd;;AAEA;EACE,yBAAyB;EACzB,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,SAAS;AACX;;AAEA;;EAEE,YAAY;AACd;;AAEA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,kBAAkB;EAClB,YAAY;EACZ,cAAc;AAChB;;AAEA;EACE,gBAAgB;EAChB,kBAAkB;EAClB,aAAa;EACb,sBAAsB;EACtB,QAAQ;AACV","sourcesContent":[".form-section {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\r\n  width: 90%;\r\n}\r\n\r\nfieldset {\r\n  border: none;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: flex-end;\r\n  gap: 5px;\r\n}\r\n\r\nlegend {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n\r\n.input-wrapper {\r\n  width: 120px;\r\n}\r\n\r\n.input-form-wrapper {\r\n  margin: 0 auto;\r\n}\r\n\r\ninput {\r\n  width: 110px;\r\n  border: 1px solid #b4b4b4;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n}\r\n\r\n.submit-button {\r\n  height: 40px;\r\n  padding: 10px 15px;\r\n  background-color: #00bcd4;\r\n  font-weight: bold;\r\n  color: white;\r\n}\r\n\r\n.submit-button:hover {\r\n  background-color: #80deea;\r\n  color: #424242;\r\n}\r\n\r\nform {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 15px;\r\n}\r\n\r\n#add-change-form input,\r\n#user-money-form input {\r\n  width: 300px;\r\n}\r\n\r\n.instructions {\r\n  background-color: #f3f3f3;\r\n  padding: 10px 20px;\r\n  border-radius: 4px;\r\n  width: 400px;\r\n  margin: 0 auto;\r\n}\r\n\r\n.instructions-list {\r\n  text-align: left;\r\n  padding-left: 30px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 5px;\r\n}\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".form-section {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\r\n  width: 90%;\r\n}\r\n\r\nfieldset {\r\n  border: none;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: flex-end;\r\n  gap: 5px;\r\n}\r\n\r\nlegend {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.input-wrapper {\r\n  width: 120px;\r\n}\r\n\r\n.input-form-wrapper {\r\n  margin: 0 auto;\r\n}\r\n\r\ninput {\r\n  width: 110px;\r\n  border: 1px solid #b4b4b4;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n}\r\n\r\n.submit-button {\r\n  height: 40px;\r\n  padding: 10px 15px;\r\n  background-color: #00bcd4;\r\n  font-weight: bold;\r\n  color: white;\r\n}\r\n\r\n.submit-button:hover {\r\n  background-color: #80deea;\r\n  color: #424242;\r\n}\r\n\r\nform {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 15px;\r\n}\r\n\r\n#add-change-form input,\r\n#user-money-form input {\r\n  width: 300px;\r\n}\r\n\r\n.instruction-toggle {\r\n  width: 80%;\r\n  margin: 0 auto;\r\n  align-self: flex-start;\r\n}\r\n\r\n.instructions {\r\n  background-color: #f3f3f3;\r\n  padding: 10px 20px;\r\n  border-radius: 4px;\r\n  width: 350px;\r\n  margin: 0 auto;\r\n}\r\n\r\n.instructions-list {\r\n  text-align: left;\r\n  padding-left: 30px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 5px;\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/css/form.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,sBAAsB;EACtB,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,YAAY;EACZ,aAAa;EACb,uBAAuB;EACvB,qBAAqB;EACrB,QAAQ;AACV;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,YAAY;EACZ,yBAAyB;EACzB,kBAAkB;EAClB,YAAY;AACd;;AAEA;EACE,YAAY;EACZ,kBAAkB;EAClB,yBAAyB;EACzB,iBAAiB;EACjB,YAAY;AACd;;AAEA;EACE,yBAAyB;EACzB,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,SAAS;AACX;;AAEA;;EAEE,YAAY;AACd;;AAEA;EACE,UAAU;EACV,cAAc;EACd,sBAAsB;AACxB;;AAEA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,kBAAkB;EAClB,YAAY;EACZ,cAAc;AAChB;;AAEA;EACE,gBAAgB;EAChB,kBAAkB;EAClB,aAAa;EACb,sBAAsB;EACtB,QAAQ;AACV","sourcesContent":[".form-section {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px;\r\n  width: 90%;\r\n}\r\n\r\nfieldset {\r\n  border: none;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: flex-end;\r\n  gap: 5px;\r\n}\r\n\r\nlegend {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.input-wrapper {\r\n  width: 120px;\r\n}\r\n\r\n.input-form-wrapper {\r\n  margin: 0 auto;\r\n}\r\n\r\ninput {\r\n  width: 110px;\r\n  border: 1px solid #b4b4b4;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n}\r\n\r\n.submit-button {\r\n  height: 40px;\r\n  padding: 10px 15px;\r\n  background-color: #00bcd4;\r\n  font-weight: bold;\r\n  color: white;\r\n}\r\n\r\n.submit-button:hover {\r\n  background-color: #80deea;\r\n  color: #424242;\r\n}\r\n\r\nform {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 15px;\r\n}\r\n\r\n#add-change-form input,\r\n#user-money-form input {\r\n  width: 300px;\r\n}\r\n\r\n.instruction-toggle {\r\n  width: 80%;\r\n  margin: 0 auto;\r\n  align-self: flex-start;\r\n}\r\n\r\n.instructions {\r\n  background-color: #f3f3f3;\r\n  padding: 10px 20px;\r\n  border-radius: 4px;\r\n  width: 350px;\r\n  margin: 0 auto;\r\n}\r\n\r\n.instructions-list {\r\n  text-align: left;\r\n  padding-left: 30px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 5px;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3593,6 +3605,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ "./src/js/constants/index.ts");
 /* harmony import */ var _validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validator */ "./src/js/domain/validator.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils */ "./src/js/utils/index.js");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -3614,6 +3627,7 @@ var __classPrivateFieldGet = (undefined && undefined.__classPrivateFieldGet) || 
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Authorization_instances, _Authorization_isLoggedIn, _Authorization_userId, _Authorization_name, _Authorization_email, _Authorization_accessToken, _Authorization_handleServerError, _Authorization_getUserData, _Authorization_saveUserData, _Authorization_getAccessToken, _Authorization_validateRegisterData, _Authorization_validateUpdateData;
+
 
 
 class Authorization {
@@ -3644,8 +3658,8 @@ class Authorization {
         return __awaiter(this, void 0, void 0, function* () {
             __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_validateRegisterData).call(this, userInputData);
             const registerData = userInputData;
-            delete registerData.passwordConfirm;
-            const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users`, Object.assign(Object.assign({}, _constants__WEBPACK_IMPORTED_MODULE_0__.POST_REQUEST_OPTIONS), { body: JSON.stringify(registerData) }));
+            const requestData = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.removeProperty)(registerData, 'passwordConfirm');
+            const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users`, Object.assign(Object.assign({}, _constants__WEBPACK_IMPORTED_MODULE_0__.POST_REQUEST_OPTIONS), { body: JSON.stringify(requestData) }));
             if (!response.ok)
                 yield __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_handleServerError).call(this, response);
             const { accessToken, user: { id: userId, name, email }, } = yield response.json();
@@ -3657,14 +3671,14 @@ class Authorization {
         return __awaiter(this, void 0, void 0, function* () {
             __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_validateUpdateData).call(this, userInputData);
             const updateData = userInputData;
-            delete updateData.passwordConfirm;
+            const requestData = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.removeProperty)(updateData, 'passwordConfirm');
             const response = yield fetch(`${_constants__WEBPACK_IMPORTED_MODULE_0__.AUTH_URL_BASE}/users/${__classPrivateFieldGet(this, _Authorization_userId, "f")}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${__classPrivateFieldGet(this, _Authorization_accessToken, "f")}`,
                 },
-                body: JSON.stringify(updateData),
+                body: JSON.stringify(requestData),
             });
             if (!response.ok)
                 yield __classPrivateFieldGet(this, _Authorization_instances, "m", _Authorization_handleServerError).call(this, response);
@@ -3956,7 +3970,7 @@ class VendingMachine {
     }
     removeProduct(productId) {
         __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateProductIdInList).call(this, productId);
-        delete __classPrivateFieldGet(this, _VendingMachine_productList, "f")[productId];
+        __classPrivateFieldSet(this, _VendingMachine_productList, (0,_utils__WEBPACK_IMPORTED_MODULE_2__.removeProperty)(__classPrivateFieldGet(this, _VendingMachine_productList, "f"), productId), "f");
     }
     addChange(money) {
         __classPrivateFieldGet(this, _VendingMachine_instances, "m", _VendingMachine_validateChange).call(this, money);
@@ -3973,7 +3987,7 @@ class VendingMachine {
         const { name, price, stock } = product;
         __classPrivateFieldSet(this, _VendingMachine_userMoney, __classPrivateFieldGet(this, _VendingMachine_userMoney, "f") - price, "f");
         if (stock === 1) {
-            delete __classPrivateFieldGet(this, _VendingMachine_productList, "f")[productId];
+            __classPrivateFieldSet(this, _VendingMachine_productList, (0,_utils__WEBPACK_IMPORTED_MODULE_2__.removeProperty)(__classPrivateFieldGet(this, _VendingMachine_productList, "f"), productId), "f");
             return;
         }
         const newData = { name, price, stock: stock - 1 };
